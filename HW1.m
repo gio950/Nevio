@@ -81,7 +81,12 @@ ylim([-15 30])
  
 %% AR model
 % Coefficients of Wiener filter
-c = arCoeff(rx, 5);
-
-% Coefficients of AR model
-a = -c;
+N=40;
+[a, s_white, d]=findAR(N, rx);
+[H, omega] = freqz(1, [1; a], Nsamples, 'whole');
+figure,
+plot(omega/(2*pi), 10*log10(s_white*abs(H).^2))
+title('AR model estimate of the PSD')
+xlabel('f')
+ylabel('Amplitude (dB)')
+ylim([-15 40])
