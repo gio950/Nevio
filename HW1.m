@@ -67,8 +67,14 @@ xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
 
-%Welch periodogram
-
+% Welch periodogram
+Welch_P = welchPSD(x, w_hamming, 25);
+figure('Name','Welch periodogram');
+plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
+title('Welch periodogram estimate of the PSD')
+xlabel('f')
+ylabel('Amplitude (dB)')
+ylim([-15 30])
 
 %analytical PSD: compute the transform of rx(n) on paper and plot it
 %according to the requirements
