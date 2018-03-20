@@ -28,7 +28,6 @@ end
 %complex r.p. x(k) 800 samples
 x=xi+j*xq;
 
-
 %% SPECTRAL ANALYSIS
 
 %autocorrelation (unbiased estimate)
@@ -80,7 +79,9 @@ ylim([-15 30])
 %according to the requirements
  
  
- %AR model
- 
- 
- 
+%% AR model
+% Coefficients of Wiener filter
+c = arCoeff(rx, 5);
+
+% Coefficients of AR model
+a = -c;
