@@ -90,3 +90,13 @@ title('AR model estimate of the PSD')
 xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 40])
+
+%% final plot
+figure, hold on
+plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
+plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
+plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'c:')
+plot(omega/(2*pi), 10*log10(s_white*abs(H).^2), 'Color', 'm');
+legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest')
+hold off
+title('Spectral analysis')
