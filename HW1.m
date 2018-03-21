@@ -1,20 +1,18 @@
-clearvars
-close all
-clc
+clear all; close all; clc;
 
 %% GENERATE THE PROCESS x(k), 1 REALIZATION
 
 Nsamples=800;
-%frequencies of the exponentials
+% Frequencies of the exponentials
 f1=0.17;
 f2=0.78;
-%generate the white noise (2 components)
+% Generate the white noise (2 components)
 sigmaw=2;
-%real part
+% Real part
 wi=sigmaw*randn(Nsamples,1);
-%imaginary part
+% Imaginary part
 wq=sigmaw*randn(Nsamples,1);
-%generate the initial phases
+% Generate the initial phases
 phi1=2*pi*rand(1);
 phi2=2*pi*rand(1);
 
@@ -25,38 +23,37 @@ for k=1:Nsamples
     xq(k)=sin(2*pi*f1*k+phi1)+sin(2*pi*f2*k+phi2)+wq(k);
 end
 
-%complex r.p. x(k) 800 samples
+% Complex r.p. x(k), 800 samples
 x=xi+j*xq;
 
 %% SPECTRAL ANALYSIS
 
-%autocorrelation (unbiased estimate)
+% Autocorrelation (unbiased estimate)
 [rx]=autocorrelation_Unb(x);
 L=floor(Nsamples/3);   %L should be lower than the length of the r.p. because of the high variance when n approaches K
 rx=rx(1:L);
 
-%Blackman-Tukey correlogram 
-%the length of 2*L+1 is because of page 86 note 24
+% Blackman-Tukey correlogram 
+% The length of 2*L+1 is because of page 86 note 24
 w_rect=window(@rectwin,2*L+1);
 w_hamming=window(@hamming,2*L+1);    
 Pbt1=correlogram(x, w_hamming, rx, L);
 Pbt2=correlogram(x, w_rect, rx, L);
 
-figure,
-subplot(211)
-plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1)))
-title('Correlogram - Hamming')
-ylabel('Amplitude (dB)')
-xlabel('f')
-subplot(212)
-plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt2)))
-title('Correlogram - rect')
-xlabel('f')
-ylabel('Amplitude (dB)')
-ylim([-15 30])
+figure();
+subplot(2,1,1);
+plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1)));
+title('Correlogram - Hamming');
+ylabel('Amplitude (dB)');
+xlabel('f');
+subplot(2,1,2);
+plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt2)));
+title('Correlogram - rect');
+xlabel('f');
+ylabel('Amplitude (dB)');
+ylim([-15 30]);
 
-%Periodogram
-
+% Periodogram
 X=fft(x);
 Pper=(1/Nsamples)*(abs(X)).^2;
 figure,
@@ -75,32 +72,67 @@ xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
 
-%analytical PSD: compute the transform of rx(n) on paper and plot it
-%according to the requirements
- 
- 
+% Analytical PSD: compute the transform of rx(n) on paper and plot it
+% according to the requirements
+
+%% Optimal choice of N
+
+err_mean = zeros(1, 10);
+
+for i = 1:20
+    % Find c_opt using N coefficients
+    c = findAR(i, rx);
+    % Error is taken on 100 different samples
+    e = zeros(1,100);
+    for k = 1:100
+        if (k < i + 1)
+            % Input vector of length N
+            x_in = flipud([zeros(i-k+1,1); x(1:k-1)]);
+            % For k = 1 x(1:0) is an empty matrix
+            y_k = x_in.'*c(1:i);
+        else
+            % Revert vector to obtain values from k-1 to k-N
+            x_in = flipud(x((k-i):(k-1)));
+            y_k = x_in.'*c(1:i);
+        end
+        % Computing the error, d(k) = x(k)
+        e_k = x(k) - y_k;
+        e(k) = e_k;
+    end
+    err_mean(i) = abs(sum(e))/length(e); 
+end
+
+figure('Name', 'Error over N');
+title('Error in function of N');
+plot(1:20, abs(err_mean));
+xlim([1 20]);
+xlabel('N'); ylabel('Error');
+
+% Setting N as argmin of error
+[minerr, N]  = min(err_mean);
+c_opt = -findAR(N, rx);
+
 %% AR model
 % Coefficients of Wiener filter
-N=40;
 [a, s_white, d]=findAR(N, rx);
-[H, omega] = freqz(1, [1; a], Nsamples, 'whole');
-figure,
-plot(omega/(2*pi), 10*log10(s_white*abs(H).^2))
-title('AR model estimate of the PSD')
-xlabel('f')
-ylabel('Amplitude (dB)')
-ylim([-15 40])
+[H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
+figure('Name','AR model estimate of the PSD');
+title('AR model estimate of the PSD');
+plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2));
+xlabel('f');
+ylabel('Amplitude (dB)');
+ylim([-15 40]);
 
-%% final plot
-figure, hold on
+%% Final spectral plot
+figure('Name', 'Spectral Analysis');
+title('Spectral analysis');
+hold on;
 plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
-plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'c:')
-plot(omega/(2*pi), 10*log10(s_white*abs(H).^2), 'Color', 'm');
-legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest')
-hold off
-title('Spectral analysis')
-
+plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
+plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2), 'Color', 'm');
+legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest');
+hold off;
 
 [H, www] = freqz([1; a], 1, Nsamples, 'whole');
 figure('Name', 'Z-plane for error predictor A(z)');
@@ -111,8 +143,6 @@ zplane([1;a]);
 
 % Length
 K = L;
-% Look up in the sky and set N
-N = 4;
 % Max number of iterations
 max_iter = 800;
 % Coefficients and error initialization
@@ -127,19 +157,19 @@ z = x - mean(x);
 for k = 1:max_iter
     if (k < N + 1)
         % Input vector of length N
-        z_k_1 = flipud([zeros(N - k + 1, 1); z(1:k - 1)]);
+        x_in = flipud([zeros(N - k + 1, 1); z(1:k - 1)]);
         % For k = 1 z(1:0) is an empty matrix
-        y_k = z_k_1.'*c(:, k);
+        y_k = x_in.'*c(:, k);
     else
         % Revert vector to obtain values from k-1 to k-N
-        z_k_1 = flipud(z((k - N):(k-1)));
-        y_k = z_k_1.'*c(:, k);
+        x_in = flipud(z((k - N):(k-1)));
+        y_k = x_in.'*c(:, k);
     end
     % d(k) is input signal z(k)
     e_k = z(k) - y_k;
     e(k) = e_k;
     % Update step
-    c(:, k+1) = c(:, k) + mu*e_k*conj(z_k_1);
+    c(:, k+1) = c(:, k) + mu*e_k*conj(x_in);
 end
 
 for index = 1:N
