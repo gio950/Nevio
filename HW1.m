@@ -7,7 +7,7 @@ Nsamples=800;
 f1=0.17;
 f2=0.78;
 % Generate the white noise (2 components)
-sigmaw=2;
+sigmaw=0.1;
 % Real part
 wi=sigmaw*randn(Nsamples,1);
 % Imaginary part
@@ -64,7 +64,8 @@ ylabel('Amplitude (dB)')
 ylim([-15 30])
 
 % Welch periodogram
-Welch_P = welchPSD(x, w_hamming, 25);
+w_welch=window(@hamming,100);
+Welch_P = welchPSD(x, w_welch, 20);
 figure('Name','Welch periodogram');
 plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
 title('Welch periodogram estimate of the PSD')
@@ -194,3 +195,18 @@ end
 figure('Name', 'Error function');
 title('Error function at each iteration');
 plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
+
+%% 3 PREDICTOR
+[copt, Jmin]=predictor(rx, N);
+t=20;
+Jvect=zeros(t,1);
+
+for i=1:length(Jvect)
+    [c_it, J_it]=predictor(rx, i);
+    Jvect(i)=J_it;
+end
+
+figure, plot([1:t],Jvect)
+coeff=[1; copt];
+A = tf([1 copt.'], 1,1);
+figure, pzmap(A)
