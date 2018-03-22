@@ -76,6 +76,10 @@ ylim([-15 30])
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
 
+b = zeros(1,800);
+% 30 is random choice just to see the plot
+b(ceil(f1*800)) = 30;
+b(ceil(f2*800)) = 30;
 
 %% Choice of N
 N = 2;
@@ -116,6 +120,7 @@ plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
 plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
 plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2), 'Color', 'm');
+plot((1:Nsamples)/Nsamples, b);
 title('Spectral analysis');
 legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest');
 hold off;
@@ -136,7 +141,7 @@ ph = angle(roots([1;a]))/(2*pi);
 % Length
 K = L;
 % Max number of iterations
-max_iter = 800;
+max_iter = 200;
 % Coefficients and error initialization
 c = zeros(N, max_iter + 1);
 e = zeros(1, max_iter);
