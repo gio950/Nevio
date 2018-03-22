@@ -76,69 +76,60 @@ ylim([-15 30])
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
 
-%% Optimal choice of N
 
-err_mean = zeros(1, 10);
+%% Choice of N
+N = 2;
 
-for i = 1:20
-    % Find c_opt using N coefficients
-    c = findAR(i, rx);
-    % Error is taken on 100 different samples
-    e = zeros(1,100);
-    for k = 1:100
-        if (k < i + 1)
-            % Input vector of length N
-            x_in = flipud([zeros(i-k+1,1); x(1:k-1)]);
-            % For k = 1 x(1:0) is an empty matrix
-            y_k = x_in.'*c(1:i);
-        else
-            % Revert vector to obtain values from k-1 to k-N
-            x_in = flipud(x((k-i):(k-1)));
-            y_k = x_in.'*c(1:i);
-        end
-        % Computing the error, d(k) = x(k)
-        e_k = x(k) - y_k;
-        e(k) = e_k;
-    end
-    err_mean(i) = abs(sum(e))/length(e); 
+[copt, Jmin]=predictor(rx, N);
+t=20;
+Jvect=zeros(t,1);
+
+for i=1:length(Jvect)
+    [c_it, J_it]=predictor(rx, i);
+    Jvect(i)=J_it;
 end
 
-figure('Name', 'Error over N');
-title('Error in function of N');
-plot(1:20, abs(err_mean));
-xlim([1 20]);
-xlabel('N'); ylabel('Error');
-
-% Setting N as argmin of error
-[minerr, N]  = min(err_mean);
-c_opt = -findAR(N, rx);
+figure('Name', 'J over N');
+plot([1:t],Jvect);
+title('J_{min} over N');
+xlim([1 t]);
+xlabel('N'); ylabel('J_{min}');
+% coeff=[1; copt];
+% A = tf([1 copt.'], 1,1);
+% figure, pzmap(A)
 
 %% AR model
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);
 [H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
 figure('Name','AR model estimate of the PSD');
-title('AR model estimate of the PSD');
 plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2));
+title('AR model estimate of the PSD');
 xlabel('f');
 ylabel('Amplitude (dB)');
 ylim([-15 40]);
 
 %% Final spectral plot
 figure('Name', 'Spectral Analysis');
-title('Spectral analysis');
 hold on;
 plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
 plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
 plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2), 'Color', 'm');
+title('Spectral analysis');
 legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest');
 hold off;
 
 [H, www] = freqz([1; a], 1, Nsamples, 'whole');
 figure('Name', 'Z-plane for error predictor A(z)');
+zplane([1; a].', 1);
 title('Z-plane for error predictor A(z)');
-zplane([1;a]);
+
+%% Estimation of phases phi1 and phi2 based on coefficients of A(z)
+
+% We notice that we have poles close to the unit circle at phases
+% corresponding to phi2 and phi2
+ph = angle(roots([1;a]))/(2*pi);
 
 %% Least Mean Squares Filter
 
@@ -193,20 +184,5 @@ for index = 1:N
 end
 
 figure('Name', 'Error function');
-title('Error function at each iteration');
 plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
-
-%% 3 PREDICTOR
-[copt, Jmin]=predictor(rx, N);
-t=20;
-Jvect=zeros(t,1);
-
-for i=1:length(Jvect)
-    [c_it, J_it]=predictor(rx, i);
-    Jvect(i)=J_it;
-end
-
-figure, plot([1:t],Jvect)
-coeff=[1; copt];
-A = tf([1 copt.'], 1,1);
-figure, pzmap(A)
+title('Error function at each iteration');
