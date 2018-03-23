@@ -50,7 +50,7 @@ end
 
 mean_error = zeros(1, max_iter);
 for i=1:max_iter
-    mean_error(i) = sum(e(:,i))/max_iter;
+    mean_error(i) = sum(e(:,i))/size(e,1);
 end
 
 figure('Name','Mean error');
