@@ -1,6 +1,6 @@
-clear all; close all; clc;
+clc; close all; clear global; clearvars;
 
-%% GENERATE THE PROCESS x(k), 1 REALIZATION
+%% LOAD 1 REALIZATION OF THE PROCESS
 
 load('inputsignal.mat', 'x');
 
@@ -62,7 +62,7 @@ b(ceil(0.17*800)) = 30;
 b(ceil(0.78*800)) = 30;
 
 %% Choice of N
-N = 2;
+N = 3;
 
 [copt, Jmin]=predictor(rx, N);
 t=20;
@@ -74,7 +74,7 @@ for i=1:length(Jvect)
 end
 
 figure('Name', 'J over N');
-plot([1:t],Jvect);
+plot(1:t,Jvect);
 title('J_{min} over N');
 xlim([1 t]);
 xlabel('N'); ylabel('J_{min}');
@@ -115,59 +115,3 @@ title('Z-plane for error predictor A(z)');
 % We notice that we have poles close to the unit circle at phases
 % corresponding to phi2 and phi2
 ph = angle(roots([1;a]))/(2*pi);
-
-%% Least Mean Squares Filter
-
-% Length
-K = L;
-% Max number of iterations
-max_iter = 200;
-% Coefficients and error initialization
-c = zeros(N, max_iter + 1);
-e = zeros(1, max_iter);
-% Choice of parameter mu
-mu_tilde = 1;
-mu = mu_tilde/(rx(1)*N);
-% Center signal around its mean
-z = x - mean(x);
-
-for k = 1:max_iter
-    if (k < N + 1)
-        % Input vector of length N
-        x_in = flipud([zeros(N - k + 1, 1); z(1:k - 1)]);
-        % For k = 1 z(1:0) is an empty matrix
-        y_k = x_in.'*c(:, k);
-    else
-        % Revert vector to obtain values from k-1 to k-N
-        x_in = flipud(z((k - N):(k-1)));
-        y_k = x_in.'*c(:, k);
-    end
-    % d(k) is input signal z(k)
-    e_k = z(k) - y_k;
-    e(k) = e_k;
-    % Update step
-    c(:, k+1) = c(:, k) + mu*e_k*conj(x_in);
-end
-
-for index = 1:N
-    figure('Name', ['Coefficient of index ' int2str(index)]);
-    subplot(2, 1, 1)
-    plot(1:max_iter+1, real(c(index, :)));
-    hold on;
-    plot([1, max_iter+1], -real(a(index))*[1 1]);
-    title(['Real part of c' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 max_iter]);
-    
-    subplot(2, 1, 2);
-    plot(1:max_iter+1, imag(c(index, :)));
-    hold on;
-    plot([1,max_iter+1], -imag(a(index))*[1 1]);
-    title(['Imaginary part of c' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 max_iter]);
-end
-
-figure('Name', 'Error function');
-plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
-title('Error function at each iteration');

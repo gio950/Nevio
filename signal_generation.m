@@ -1,3 +1,5 @@
+close all; clear global; clearvars; clc;
+
 %% GENERATE THE PROCESS x(k), 1 REALIZATION
 
 Nsamples=800;
@@ -22,6 +24,6 @@ for k=1:Nsamples
 end
 
 % Complex r.p. x(k), 800 samples
-x=xi+j*xq;
+x=xi+1i*xq;
 
 save('inputsignal.mat', 'x');
