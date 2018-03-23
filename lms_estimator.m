@@ -14,7 +14,7 @@ rx = rx(1:L);
 K = L;
 
 % Max number of iterations
-max_iter = 200;
+max_iter = 800;
 
 % Coefficients and error initialization
 c = zeros(N, max_iter + 1);
