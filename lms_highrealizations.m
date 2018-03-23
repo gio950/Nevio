@@ -40,18 +40,22 @@ for i=1:size(x,2)
                 x_in = flipud(z((k - N):(k-1)));
                 y_k = x_in.'*c(:, k);
             end
-                % d(k) is input signal z(k)
-                e_k = z(k) - y_k;
-                e(i,k) = e_k;
-                % Update step
-                c(:, k+1) = c(:, k) + mu*e_k*conj(x_in);
+            % d(k) is input signal z(k)
+            e_k = z(k) - y_k;
+            e(i,k) = e_k;
+            % Update step
+            c(:, k+1) = c(:, k) + mu*e_k*conj(x_in);
         end
 end
 
+% Mean error is computed over 300 errors for the same k
+
 mean_error = zeros(1, max_iter);
-for i=1:max_iter
-    mean_error(i) = sum(e(:,i))/size(e,1);
+for k=1:max_iter
+    mean_error(k) = sum(e(:,k))/size(e,1);
 end
 
-figure('Name','Mean error');
+figure('Name','Mean squared error');
 plot(1:max_iter,10*log10(abs(mean_error).^2));
+title('Mean squared error over iterations');
+xlabel('k (iterations)'); ylabel('Mean Squared Error (dB)');
