@@ -47,3 +47,11 @@ for i=1:size(x,2)
                 c(:, k+1) = c(:, k) + mu*e_k*conj(x_in);
         end
 end
+
+mean_error = zeros(1, max_iter);
+for i=1:max_iter
+    mean_error(i) = sum(e(:,i))/max_iter;
+end
+
+figure('Name','Mean error');
+plot(1:max_iter,10*log10(abs(mean_error).^2));
