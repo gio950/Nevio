@@ -178,6 +178,77 @@ In our homework, we checked that the autocorrelation matrix $\mathbf{R}$ is inde
 \subsection*{Optimal predictor}
 The coefficients for the optimal error predictor are given by $ \mathbf{c} = -\mathbf{a}$, where the vector $\mathbf{a}$ is given by the coefficients of the AR model.
 
+\begin{figure}[ht!]
+	\centering
+	\begin{tikzpicture}[auto,>=latex']
+	\tikzstyle{block} = [draw, rectangle, minimum height=1cm, minimum width=1cm]
+	
+	\node [coordinate, label={[label distance=0.2cm]60:$x(k)$}] (start) {};
+	
+	\node [draw, rectangle, minimum height=0.5cm, minimum width=0.5cm, right = 2cm of start] (tc1){$T_c$};
+	\node [coordinate, left = 0.5cm of tc1] (m1){};
+	
+	\node[draw, regular polygon, regular polygon sides=3, rotate = 180, scale=0.7, label=left:{$c_0$}, below = 1cm of m1] (c0){};
+	
+	\node [coordinate, right = 0.5cm of tc1, label={[label distance=0.2cm]90:$x(k-1)$}] (m2){};
+	\node[draw, regular polygon, regular polygon sides=3, rotate = 180, scale=0.7, label=left:{$c_1$}, below = 1cm of m2] (c1){};
+	
+	\node [draw, rectangle, minimum height=0.5cm, minimum width=0.5cm, right = 1cm of tc1] (tc2){$T_c$};
+
+	\node [coordinate, right = 0.5cm of tc2, label={[label distance=0.2cm]90:$x(k-2)$}] (m3){};
+	\node[draw, regular polygon, regular polygon sides=3, rotate = 180, scale=0.7, label=left:{$c_2$}, below = 1cm of m3] (c2){};
+		
+	\node [coordinate, right = 1.7cm of m3] (mN2){};
+	\node[draw, regular polygon, regular polygon sides=3, rotate = 180, scale=0.7, label=left:{$c_{N-2}$}, below = 1cm of mN2] (cN2){};	
+	
+	\node [draw, rectangle, minimum height=0.5cm, minimum width=0.5cm, right = 0.5cm of mN2] (tcN1){$T_c$};
+	\node [coordinate, right = 0.5cm of tcN1, label={[label distance=0.2cm]90:$x(k-N+1)$}] (mN1){};
+	\node[draw, regular polygon, regular polygon sides=3, rotate = 180, scale=0.7, label=left:{$c_{N-1}$}, below = 1cm of mN1] (cN1){};
+	
+	\node [draw, rectangle, minimum height=0.3cm, minimum width=8cm, below = 1cm of c2] (sum){$+$};
+	
+	\node [draw, circle,minimum size=0.5cm,inner sep=0pt, below = 0.8cm of sum] (sum2){$+$};
+	
+	\node [coordinate, below = 0.8cm of sum2] (d1){};
+	
+	\node [coordinate, below = 1cm of c0] (v0){};
+	\node [coordinate, below = 1cm of c1] (v1){};
+	\node [coordinate, below = 1cm of c2] (v2){};
+	\node [coordinate, below = 1cm of cN2] (vN2){};
+	\node [coordinate, below = 1cm of cN1] (vN1){};
+	
+	\node [coordinate, below = 4.25cm of start] (d2){};
+	
+	\node [coordinate, right = 1cm of sum2, label=above:{$e(k)$}] (end){};
+	
+	\draw [-] (start) --node[]{} (tc1);
+	\draw [-] (m1) --node[]{} (c0);
+	\draw [-] (tc1) --node[]{} (tc2);
+	\draw [-] (m2) --node[]{} (c1);
+	\draw [-] (tc2) --node[]{} (m3);
+	\draw [-] (m3) --node[]{} (c2);
+	\draw [dashed] (m3) --node[]{} (mN2);
+	\draw [-] (mN2) --node[]{} (cN2);
+	\draw [-] (mN2) --node[]{} (tcN1);
+	\draw [-] (tcN1) --node[]{} (mN1);
+	\draw [-] (mN1) --node[]{} (cN1);
+	\draw [->] (c0) --node[]{} (v0);
+	\draw [->] (c1) --node[]{} (v1);
+	\draw [->] (c2) --node[]{} (v2);
+	\draw [->] (cN2) --node[]{} (vN2);
+	\draw [->] (cN1) --node[]{} (vN1);
+	\draw [->] (sum) --node[label=left:{$y(k)$}]{} (sum2);
+	\draw [->] (d1) --node[label=left:{$d(k)$}]{} (sum2);
+	\draw [-] (start) --node[]{} (d2);
+	\draw [-] (d2) --node[]{} (d1);
+	\draw [->] (sum2) --node[]{} (end);
+	
+	\end{tikzpicture}
+	\caption{Wiener filter}
+	\label{fig:wiener}
+\end{figure}
+
+
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.5\textwidth]{zplane}
