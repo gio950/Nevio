@@ -2,7 +2,7 @@ clc; close all; clear global; clearvars;
 
 %% LOAD 1 REALIZATION OF THE PROCESS
 
-load('inputsignal.mat', 'x');
+load('inputsignal01.mat', 'x');
 
 Nsamples=length(x);
 
@@ -10,16 +10,19 @@ Nsamples=length(x);
 
 % Autocorrelation (unbiased estimate)
 [rx]=autocorrelation_Unb(x);
-L=floor(Nsamples/3);   %L should be lower than the length of the r.p. because of the high variance when n approaches K
+L=floor(Nsamples/3);
+Lc=floor(Nsamples/5);   %L should be lower than the length of the r.p. because of the high variance when n approaches K
+rxc=rx(1:Lc);
 rx=rx(1:L);
 
 % Blackman-Tukey correlogram 
 % The length of 2*L+1 is because of page 86 note 24
-w_rect=window(@rectwin,2*L+1);
-w_hamming=window(@hamming,2*L+1);    
-Pbt1=correlogram(x, w_hamming, rx, L);
-Pbt2=correlogram(x, w_rect, rx, L);
+w_rect=window(@rectwin,2*Lc+1);
+w_hamming=window(@hamming,2*Lc+1);    
+Pbt1=correlogram(x, w_hamming, rx, Lc);
+Pbt2=correlogram(x, w_rect, rx, Lc);
 
+%{
 figure();
 subplot(2,1,1);
 plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1)));
@@ -32,7 +35,7 @@ title('Correlogram - rect');
 xlabel('f');
 ylabel('Amplitude (dB)');
 ylim([-15 30]);
-
+%}
 % Periodogram
 X=fft(x);
 Pper=(1/Nsamples)*(abs(X)).^2;
@@ -44,14 +47,22 @@ ylabel('Amplitude (dB)')
 ylim([-15 30])
 
 % Welch periodogram
-w_welch=window(@hamming,100);
-Welch_P = welchPSD(x, w_welch, 20);
+S=35;   %overlap
+D=70;   %window length
+Ns=floor((Lc-D)/(D-S) + 1);
+w_welch=window(@hamming,D);
+Welch_P = welchPSD(x, w_welch, S);
+var_Welch=Welch_P.^2/Ns;
+
+%{
 figure('Name','Welch periodogram');
 plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
 title('Welch periodogram estimate of the PSD')
 xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
+%}
+
 
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
@@ -86,13 +97,14 @@ xlabel('N'); ylabel('J_{min}');
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);
 [H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
+%{
 figure('Name','AR model estimate of the PSD');
 plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2));
 title('AR model estimate of the PSD');
 xlabel('f');
 ylabel('Amplitude (dB)');
 ylim([-15 40]);
-
+%}
 %% Final spectral plot
 figure('Name', 'Spectral Analysis');
 hold on;

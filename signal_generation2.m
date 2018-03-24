@@ -7,7 +7,7 @@ Nsamples=800;
 f1=0.17;
 f2=0.78;
 % Generate the white noise (2 components)
-sigmaw=0.1;
+sigmaw=2;
 % Real part
 wi=sigmaw*randn(Nsamples,1);
 % Imaginary part
@@ -26,4 +26,4 @@ end
 % Complex r.p. x(k), 800 samples
 x=xi+1i*xq;
 
-save('inputsignal.mat', 'x');
+save('inputsignal2.mat', 'x');
