@@ -72,7 +72,8 @@ for index = 1:N
     plot([1, max_iter+1], -real(a(index))*[1 1]);
     title(['Real part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
     legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 max_iter]);
+    xlim([0 200]);
+    xlabel('Number of iterations');
     
     subplot(2, 1, 2);
     plot(1:max_iter+1, imag(c_mean(index, :)));
@@ -80,14 +81,15 @@ for index = 1:N
     plot([1,max_iter+1], -imag(a(index))*[1 1]);
     title(['Imaginary part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
     legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 max_iter]);
+    xlim([0 200]);
+    xlabel('Number of iterations');
 end
 
 figure('Name','Mean squared error');
 plot(1:max_iter,10*log10(mean_error), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
 title('Mean squared error over iterations');
-xlabel('k (iterations)'); ylabel('Mean Squared Error (dB)');
+xlabel('Number of iterations'); ylabel('Mean Squared Error (dB)');
+xlim([0 200]);
 
-
-save('Jmin.mat', 'mean_error');
-save('avg_coeff.mat', 'c_mean');
+%save('Jmin.mat', 'mean_error');
+%save('avg_coeff.mat', 'c_mean');
