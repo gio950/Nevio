@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{mathrsfs}
 \usepackage{enumitem}
+\usepackage{booktabs}
 
 \usepackage{array}
 % Avoid paragraph indent
@@ -27,6 +28,7 @@
 \usepackage{subfig}
 \captionsetup[figure]{labelfont={bf},name={Figure},labelsep=period}
 \captionsetup[table]{labelfont={bf},name={Table},labelsep=period}
+
 \begin{document}
 	
 \title{Digital Communications and Laboratory \\ First Homework}
@@ -263,11 +265,13 @@ In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reporte
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-Zero	& Real part & Imaginary part	& Magnitude		& Normalized frequency \\\hline
-$z_1$ 	& 0.4766	& 0.8718			& 0.9936		& 0.1704 \\\hline
-$z_2$	& 0.1845	& -0.9762			& 0.9936		& -0.2203 \\ \hline
+\begin{tabular}{ccccc}
+\toprule
+$z$	& $\Re[z]$ & $\Im[z]$	& $|z|$		& $\theta$ \\
+\midrule
+$z_1$ 	& 0.4766	& 0.8718			& 0.9936		& 0.1704 \\
+$z_2$	& 0.1845	& -0.9762			& 0.9936		& 0.7797 \\
+\bottomrule
 \end{tabular}
 \caption{Zeros of A(z)}
 \label{tab:errpred}
