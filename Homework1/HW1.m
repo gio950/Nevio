@@ -67,6 +67,10 @@ ylim([-15 30])
 % according to the requirements
 
 b = zeros(1,800);
+for i=1:length(b)
+    b(i) = 10*log10(0.1);
+end
+
 % 30 is random choice just to see the plot
 b(ceil(0.17*800)) = 30;
 b(ceil(0.78*800)) = 30;
@@ -111,10 +115,12 @@ plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
 plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
 plot(omega/(2*pi), 10*log10(s_white*(abs(H_w)).^2), 'Color', 'm');
-plot((1:Nsamples)/Nsamples, b);
+plot((1:Nsamples)/Nsamples, b, 'k:');
 title('Spectral analysis');
-legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Location', 'SouthWest');
+legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Actual value', 'Location', 'SouthWest');
 hold off;
+xlabel('Normalized frequency');
+ylabel('Estimated PSD (dB)');
 
 [H, www] = freqz([1; a], 1, Nsamples, 'whole');
 figure('Name', 'Z-plane for error predictor A(z)');
