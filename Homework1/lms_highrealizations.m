@@ -8,7 +8,7 @@ load('realizations.mat','x');
 % Max number of iterations
 max_iter = 800;
 % Set parameters
-L = floor(size(x,1)/3);
+L = floor(size(x,1)/5);
 N = 2;
 K = L;
 
@@ -24,7 +24,7 @@ for i=1:size(x,2)
     % Coefficients initialization
     c = zeros(N, max_iter + 1);
     % Choice of parameter mu
-    mu_tilde = 0.1;
+    mu_tilde = 0.05;
     mu = mu_tilde/(rx(1)*N);
 
     % Center signal around its mean
@@ -72,7 +72,7 @@ for index = 1:N
     plot([1, max_iter+1], -real(a(index))*[1 1]);
     title(['Real part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
     legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 200]);
+    xlim([0 800])
     xlabel('Number of iterations');
     
     subplot(2, 1, 2);
@@ -81,7 +81,7 @@ for index = 1:N
     plot([1,max_iter+1], -imag(a(index))*[1 1]);
     title(['Imaginary part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
     legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 200]);
+    xlim([0 800])
     xlabel('Number of iterations');
 end
 
@@ -89,7 +89,7 @@ figure('Name','Mean squared error');
 plot(1:max_iter,10*log10(mean_error), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
 title('Mean squared error over iterations');
 xlabel('Number of iterations'); ylabel('Mean Squared Error (dB)');
-xlim([0 200]);
+
 
 %save('Jmin.mat', 'mean_error');
 %save('avg_coeff.mat', 'c_mean');

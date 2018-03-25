@@ -38,7 +38,29 @@
 
 \section*{Problem 1}
 
+The random process to simulate is:
+\begin{equation}
+x(k)=e^{j2\pi f_1 k +\phi_1} + 0.8e^{j2\pi f_2 k +\phi_2} + w(k)
+\end{equation}
+\noindent where $f_1=0.17$ and $f_2=0.78$ are the normalized frequencies of the exponential signals, $\phi_1$ and $\phi_2$ their initial phases considered as uniformly distributed in the interval $(0,2\pi)$. The added noise $w(k)$ is a r.p. that follows a complex Gaussian distribution with zero mean and variance $\sigma_w^2$.
+The simulation of this process has been carried out for $K=800$ samples of a single realization.
+
 \subsection*{Autocorrelation estimation}
+
+An unbiased estimate of the autocorrelation of the signal is provided by \cite{nevio<3}:
+\begin{equation}
+{\hat{\mathtt{r}}_x(n)}=\frac{1}{K-n} \sum_{k=n}^{K-1} x(k) x^*(k-n) \mbox{    , for    } n=0,1,...,K-1
+\end{equation}
+\noindent where $K$ is the number of samples of the realization of $x(k)$.  
+
+A biased estimate of the autocorrelation is instead \cite{nevio<3}:
+\begin{equation}
+{\check{\mathtt{r}}_x(n)}=\frac{1}{K} \sum_{k=n}^{K-1} x(k) x^*(k-n)=\Big(1-\frac{|n|}{K}\Big)\hat{\mathtt{r}}_x(n)
+\end{equation}
+
+The variance of the estimate gets larger and larger as $n$ approaches $K$. For this reason the number of samples that provide a reliable estimate ($=L$) is much lower than the length of $x(k)$. In the following analysis we will state in each method the value of $L$ used.
+
+
 
 \subsection*{Periodogram}
 An estimate of the statistical power of $\{ x(k) \}$ is given by
@@ -50,11 +72,11 @@ An estimate of the statistical power of $\{ x(k) \}$ is given by
 \end{equation}
 An estimator of the PSD is given by
 \begin{equation}\label{eq:periodogram}
-	\mathcal{P}_{PER}(f) = \frac{1}{KT_c} |\mathcal{\tilde{X}}(f)|^2
+	\mathcal{P}_{PER}(f) = \frac{1}{KT_c} |\mathcal{\tilde{X}}(f)|^2= T_c \sum_{n=-(K-1)}^{K-1} {\check{\mathtt{r}}_x(n)} e^{j2\pi f n T_c}
 \end{equation}
 
+This method is related to the biased estimator of the autocorrelation presented in the previous section, and is therefore affected by a BIAS. It also presents a very large variance due to the fact that samples of the autocorrelation up to $K-1$ are used (here $L=800$).
 To compute the Fourier transform, we use \verb fft  function of MATLAB.\\
-Since the transform is taken on a finite number of samples and uses by default a rectangular windows, this is a biased estimator.
 
 \subsection*{Welch Periodogram}
 The main idea behind the Welch periodogram is to compute periodograms over different windows of the input signal and to average them.\\
@@ -76,7 +98,7 @@ This estimator uses the autocorrelation unbiased estimation $\{{\hat{\mathtt{r}}
 \begin{equation}
 \mathcal{P}_{BT}(f) = T_c\sum_{n=-L}^{L} \mathtt{w}(n)\hat{\mathtt{r}}_x(n)e^{-j2\pi f n T_c}
 \end{equation}
-where $\mathtt{w}$ is a window of length $2L+1$. For this estimator, we used an Hamming window.
+where $\mathtt{w}$ is a window of length $2L+1$. For this estimator we used an Hamming window and $L=\frac{K}{5}=160$ to reduce the variance of the autocorrelation estimate.
 
 \subsection*{AR Model}
 One last method for estimating the PSD of a signal is using an AR model of order N to describe the process.\\
@@ -267,7 +289,7 @@ In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reporte
 \centering
 \begin{tabular}{ccccc}
 \toprule
-$z$	& $\Re[z]$ & $\Im[z]$	& $|z|$		& $\theta$ \\
+$z$	& $\Re[z]$ & $\Im[z]$	& $|z|$		& $f$ \\
 \midrule
 $z_1$ 	& 0.4766	& 0.8718			& 0.9936		& 0.1704 \\
 $z_2$	& 0.1845	& -0.9762			& 0.9936		& 0.7797 \\
@@ -330,5 +352,13 @@ In Figure \ref{fig:err300} it is shown the behavior of the cost function $J(k) =
 	\caption{Mean squared error by averaging over 300 realizations}
 	\label{fig:err300}
 \end{figure}
+
+
+\begin{thebibliography}{15}
+	\bibitem{nevio<3}
+	Nevio Benvenuto, Giovanni Cherubini,
+	\textit{Algorithms for Communication Systems and their Applications}. 
+	Wiley, 2002.
+\end{thebibliography}
 
 \end{document}

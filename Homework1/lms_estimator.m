@@ -6,7 +6,7 @@ clc; close all; clear global; clearvars;
 load('inputsignal01.mat','x');
 
 % Set parameters
-L = floor(length(x)/3);
+L = floor(length(x)/5);
 N = 2;
 rx = autocorrelation_Unb(x);
 rx = rx(1:L);

@@ -10,17 +10,15 @@ Nsamples=length(x);
 
 % Autocorrelation (unbiased estimate)
 [rx]=autocorrelation_Unb(x);
-L=floor(Nsamples/3);
-Lc=floor(Nsamples/5);   %L should be lower than the length of the r.p. because of the high variance when n approaches K
-rxc=rx(1:Lc);
+L=floor(Nsamples/5);%L should be lower than the length of the r.p. because of the high variance when n approaches K
 rx=rx(1:L);
 
 % Blackman-Tukey correlogram 
 % The length of 2*L+1 is because of page 86 note 24
-w_rect=window(@rectwin,2*Lc+1);
-w_hamming=window(@hamming,2*Lc+1);    
-Pbt1=correlogram(x, w_hamming, rx, Lc);
-Pbt2=correlogram(x, w_rect, rx, Lc);
+w_rect=window(@rectwin,2*L+1);
+w_hamming=window(@hamming,2*L+1);    
+Pbt1=correlogram(x, w_hamming, rx, L);
+Pbt2=correlogram(x, w_rect, rx, L);
 
 %{
 figure();
@@ -39,17 +37,18 @@ ylim([-15 30]);
 % Periodogram
 X=fft(x);
 Pper=(1/Nsamples)*(abs(X)).^2;
+%{
 figure,
 plot(1/Nsamples:1/Nsamples:1,10*log10(Pper))
 title('Periodogram estimate of the PSD')
 xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
-
+%}
 % Welch periodogram
 S=35;   %overlap
 D=70;   %window length
-Ns=floor((Lc-D)/(D-S) + 1);
+Ns=floor((L-D)/(D-S) + 1);
 w_welch=window(@hamming,D);
 Welch_P = welchPSD(x, w_welch, S);
 var_Welch=Welch_P.^2/Ns;
@@ -109,7 +108,7 @@ ylim([-15 40]);
 figure('Name', 'Spectral Analysis');
 hold on;
 plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
-plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)/length(Pbt1)), 'Color', 'b')
+plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
 plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
 plot(omega/(2*pi), 10*log10(s_white*(abs(H_w)).^2), 'Color', 'm');
 plot((1:Nsamples)/Nsamples, b);

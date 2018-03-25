@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.7)  24 MAR 2018 19:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.7)  25 MAR 2018 17:56
 entering extended mode
 **./report.tex
 (report.tex
@@ -1107,115 +1107,124 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 56.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 79.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [1] [2]
-<figs/zplane.png, id=57, 526.96875pt x 395.22656pt>
+)
+Underfull \hbox (badness 10000) in paragraph at lines 78--80
+
+ []
+
+[1] [2]
+<figs/zplane.png, id=55, 526.96875pt x 395.22656pt>
 File: figs/zplane.png Graphic file (type png)
 <use figs/zplane.png>
-Package pdftex.def Info: figs/zplane.png  used on input line 256. on input line
- 256.
+Package pdftex.def Info: figs/zplane.png  used on input line 278. on input line
+ 278.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 256.
- [3 <./figs/zplane.png (PNG copy)>]
-<figs/c1_1real.png, id=61, 526.96875pt x 395.22656pt>
+ 278.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[3] [4 <./figs/zplane.png (PNG copy)>]
+<figs/c1_1real.png, id=64, 526.96875pt x 395.22656pt>
 File: figs/c1_1real.png Graphic file (type png)
 <use figs/c1_1real.png>
-Package pdftex.def Info: figs/c1_1real.png  used on input line 310. on input li
-ne 310.
+Package pdftex.def Info: figs/c1_1real.png  used on input line 332. on input li
+ne 332.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 310.
-<figs/c2_1real.png, id=62, 526.96875pt x 395.22656pt>
+ 332.
+<figs/c2_1real.png, id=65, 526.96875pt x 395.22656pt>
 File: figs/c2_1real.png Graphic file (type png)
 <use figs/c2_1real.png>
-Package pdftex.def Info: figs/c2_1real.png  used on input line 312. on input li
-ne 312.
+Package pdftex.def Info: figs/c2_1real.png  used on input line 334. on input li
+ne 334.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 312.
+ 334.
 
-Overfull \hbox (7.83142pt too wide) in paragraph at lines 310--313
+Overfull \hbox (7.83142pt too wide) in paragraph at lines 332--335
  [][][] 
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<figs/c1_300real.png, id=63, 526.96875pt x 395.22656pt>
+<figs/c1_300real.png, id=66, 526.96875pt x 395.22656pt>
 File: figs/c1_300real.png Graphic file (type png)
 <use figs/c1_300real.png>
-Package pdftex.def Info: figs/c1_300real.png  used on input line 320. on input 
-line 320.
+Package pdftex.def Info: figs/c1_300real.png  used on input line 342. on input 
+line 342.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 320.
-<figs/c2_300real.png, id=64, 526.96875pt x 395.22656pt>
+ 342.
+<figs/c2_300real.png, id=67, 526.96875pt x 395.22656pt>
 File: figs/c2_300real.png Graphic file (type png)
 <use figs/c2_300real.png>
-Package pdftex.def Info: figs/c2_300real.png  used on input line 322. on input 
-line 322.
+Package pdftex.def Info: figs/c2_300real.png  used on input line 344. on input 
+line 344.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 322.
+ 344.
 
-Overfull \hbox (7.83142pt too wide) in paragraph at lines 320--323
+Overfull \hbox (7.83142pt too wide) in paragraph at lines 342--345
  [][][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<figs/error_300real.png, id=65, 526.96875pt x 395.22656pt>
+<figs/error_300real.png, id=68, 526.96875pt x 395.22656pt>
 File: figs/error_300real.png Graphic file (type png)
 <use figs/error_300real.png>
-Package pdftex.def Info: figs/error_300real.png  used on input line 329. on inp
-ut line 329.
+Package pdftex.def Info: figs/error_300real.png  used on input line 351. on inp
+ut line 351.
 Package pdftex.def Info: Requested size: 241.84843pt x 181.3903pt on input line
- 329.
+ 351.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[4]
+[5 <./figs/c1_1real.png (PNG copy)> <./figs/c2_1real.png (PNG copy)>] [6 <./fig
+s/c1_300real.png (PNG copy)> <./figs/c2_300real.png (PNG copy)> <./figs/error_3
+00real.png (PNG copy)>] [7
 
-LaTeX Warning: Text page 5 contains only floats.
-
-[5 <./figs/c1_1real.png (PNG copy)> <./figs/c2_1real.png (PNG copy)> <./figs/c1
-_300real.png (PNG copy)> <./figs/c2_300real.png (PNG copy)> <./figs/error_300re
-al.png (PNG copy)>] (report.aux) ) 
+] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 18631 strings out of 493312
- 376369 string characters out of 3138900
- 463992 words of memory out of 3000000
- 21768 multiletter control sequences out of 15000+200000
- 22799 words of font info for 75 fonts, out of 3000000 for 9000
+ 18638 strings out of 493312
+ 376449 string characters out of 3138900
+ 459996 words of memory out of 3000000
+ 21772 multiletter control sequences out of 15000+200000
+ 25029 words of font info for 78 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,10n,82p,445b,805s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fon
-ts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\jacop\AppData\Local\MiKT
-eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk> <C:\Users\jacop\AppData\
-Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\jaco
-p\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk> <C:\
-Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm120
-0.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ecbx1440.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknapp
-en\ec\dpi600\ecbx1728.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
-our\jknappen\ec\dpi600\ecrm1440.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fo
-nts\pk\ljfour\jknappen\ec\dpi600\ecrm2074.pk><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/P
-rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-msy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb
->
-Output written on report.pdf (6 pages, 386390 bytes).
+ <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
+pen\ec\dpi600\ecti1200.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\lj
+four\jknappen\ec\dpi600\ecbx2488.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\f
+onts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\jacop\AppData\Local\Mi
+KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk> <C:\Users\jacop\AppDat
+a\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\ja
+cop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk> <C
+:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1
+440.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dp
+i600\ecrm1200.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkna
+ppen\ec\dpi600\ecbx1728.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\fonts\pk\l
+jfour\jknappen\ec\dpi600\ecrm1440.pk> <C:\Users\jacop\AppData\Local\MiKTeX\2.9\
+fonts\pk\ljfour\jknappen\ec\dpi600\ecrm2074.pk><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi
+6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.p
+fb>
+Output written on report.pdf (8 pages, 406271 bytes).
 PDF statistics:
- 331 PDF objects out of 1000 (max. 8388607)
+ 381 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
