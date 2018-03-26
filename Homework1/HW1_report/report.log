@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.26)  26 MAR 2018 11:49
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.26)  26 MAR 2018 12:47
 entering extended mode
 **./report.tex
 (report.tex
@@ -776,7 +776,7 @@ File: figs/c1_1real.png Graphic file (type bmp)
 File: figs/c2_1real.png Graphic file (type bmp)
 <figs/c2_1real.png>
 
-Overfull \hbox (7.83322pt too wide) in paragraph at lines 366--369
+Overfull \hbox (7.83322pt too wide) in paragraph at lines 363--366
  [][][] 
  []
 

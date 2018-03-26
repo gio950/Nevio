@@ -43,7 +43,7 @@ The random process to simulate is:
 \begin{equation}
 x(k)=e^{j(2\pi f_1 k +\phi_1)} + 0.8e^{j(2\pi f_2 k +\phi_2)} + w(k)
 \end{equation}
-\noindent where $f_1=0.17$ and $f_2=0.78$ are the normalized frequencies of the exponential signals, $\phi_1$ and $\phi_2$ their initial phases considered as uniformly distributed in the interval $ [0,2\pi)$. The added noise $w(k)$ is a r.p. that follows a complex Gaussian distribution with zero mean and variance $\sigma_w^2$.
+where $f_1=0.17$ and $f_2=0.78$ are the normalized frequencies of the exponential signals, $\phi_1$ and $\phi_2$ their initial phases considered as uniformly distributed in the interval $ [0,2\pi)$. The added noise $w(k)$ is a r.p. that follows a complex Gaussian distribution with zero mean and variance $\sigma_w^2$.
 The simulation of this process has been carried out for $K=800$ samples of a single realization.
 
 \subsection*{Autocorrelation estimation}
@@ -83,7 +83,7 @@ An estimator of the PSD is given by
 	\mathcal{P}_{PER}(f) = \frac{1}{KT_c} |\mathcal{\tilde{X}}(f)|^2= T_c \sum_{n=-(K-1)}^{K-1} {\check{\mathtt{r}}_x(n)} e^{j2\pi f n T_c}
 \end{equation}
 
-This method is related to the biased estimator of the autocorrelation presented in the previous section, and is therefore affected by a BIAS. It also presents a very large variance due to the fact that samples of the autocorrelation up to $K-1$ are used (here $L=800$).
+This method is related to the biased estimator of the autocorrelation presented in the previous section, and is therefore affected by a BIAS. This estimator also presents a very large variance due to the fact that samples of the autocorrelation up to $K-1$ are used (here $L=800$).
 To compute the Fourier transform, we use \verb fft  function of MATLAB.\\
 
 \subsection*{Welch Periodogram}
@@ -166,7 +166,7 @@ The z-transform of the autocorrelation sequence of $x$ is given by
 \begin{equation}
 	P_x(z) = \frac{\sigma_w^2}{A(z) A^{*} \left( \frac{1}{z^{*}} \right) }
 \end{equation}
-hence the PSD of $x$ is the Fourier transform of $P_x(z)$:
+The PSD of $x$, given by the Fourier transform of the autocorrelation sequence, is:
 \begin{equation}
 	\mathcal{P}_x(f) = P_z(e^{j 2 \pi f T_c})= \frac{T_c \sigma_w^2}{|\mathcal{A}(f)|^2}
 \end{equation}
@@ -203,7 +203,7 @@ To choose the parameter $N$ we decided to analyze the behavior of the cost funct
 	\label{fig:choiceofn}
 \end{figure}
 
-From Figure \ref{fig:choiceofn} it can be seen that a suitable choice is $N=2$.\\
+From Figure \ref{fig:choiceofn}, with restricted to the interval $[1,5]$ it can be seen that a suitable choice is $N=2$.\\
 Using this value the autocorrelation matrix $\mathbf{R}$ is indeed well conditioned, hence the solution is acceptable.
 
 \subsection*{Results}
@@ -284,12 +284,10 @@ The coefficients for the optimal error predictor are given by $ \mathbf{c} = -\m
 	\draw [-] (start) --node[]{} (d2);
 	\draw [-] (d2) --node[]{} (d1);
 	\draw [->] (sum2) --node[]{} (end);
-	
 	\end{tikzpicture}
 	\caption{Wiener filter}
 	\label{fig:wiener}
 \end{figure}
-
 
 \begin{figure}[H]
 	\centering
@@ -302,7 +300,6 @@ As we can see in Figure \ref{fig:zpln}, the presence of zeros close the unit cir
 The phase (normalized over $2 \pi$) of those zeros does determine the frequency of the discrete component.\\
 In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reported, along with their magnitude and phase.
 
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
@@ -310,7 +307,7 @@ In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reporte
 $z$		& $\Re[z]$ 	& $\Im[z]$			& $|z|$			& $f$ \\
 \midrule
 $z_1$ 	& 0.4766	& 0.8718			& 0.9936		& 0.1704 \\
-$z_2$	& 0.1845	& -0.9762			& 0.9936		& 0.7797 \\
+$z_2$	& 0.1845	& -0.9762			& 0.9935		& 0.7797 \\
 \bottomrule
 \end{tabular}
 \caption{Zeros of A(z)}
@@ -341,7 +338,7 @@ At the beginning, we decided to initialize the Wiener filter coefficients to zer
 Applying the algorithm on a single realization of the process we obtained a grassy behavior of the coefficients and the error.\\
 Using $k_{max} = 800$ iterations and update coefficient $\tilde{\mu} = 0.05$ resulted in convergence even before reaching $k_{max}$.\\
 Then we applied the LMS over 300 different realizations of the signal and took the average value for coefficients and error for each iteration. The behavior is much smoother than in the previous analysis, especially for $|e(k)|^2$.\\
-In Table \ref{tab:predopt} are reported the coefficients of the predictor at convergence and their optimal value,computed using (\ref{eq:yulewalker}):
+In Table \ref{tab:predopt} are reported the coefficients of the predictor at convergence, their optimal value, computed using (\ref{eq:yulewalker}) and their percentage difference.
 
 \begin{table}[H]
 	\centering
