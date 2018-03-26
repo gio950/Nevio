@@ -303,9 +303,8 @@ The coefficients for the optimal error predictor are given by $ \mathbf{c} = -\m
 	\label{fig:zpln}
 \end{figure}
 
-As we can see in Figure \ref{fig:zpln}, the presence of zeros close the unit circle is a rough indicator of ``discrete'' frequency components.\\
-The phase (normalized over $2 \pi$) of those zeros does determine the frequency of the discrete component.\\
-In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reported, along with their magnitude and phase.
+Knowing the coefficients of the best predictor we can write the extended expression of its transfer function $A(z)$. The presence of "discrete" components in the spectrum can be detected by looking at the zeros of $A(z)$, because they coincide with the poles of the transfer function of the AR filter: poles near the unit circle result in peaks in the frequency response $1/A(f)$ and so also peaks in the PSD estimate obtained with the AR model (see equation (11)). In our specific case we can see in figure \ref{fig:zpln} that we have the two zeros of $A(z)$ near the unit circle and by computing their frequencies we can infer the frequencies of the discrete components in the spectrum of the signal $x(k)$. To obtain the correct numerical value we need to normalize the frequencies over $2\pi$.
+In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reported, along with their magnitude and phase, proving that up to a certain level of precision we can compute $f_1$ and $f_2$ from the transfer function of the predictor without using the Fourier transform of the signal.
 
 \begin{table}[H]
 \centering
@@ -313,8 +312,8 @@ In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reporte
 \toprule
 $z$		& $\Re[z]$ 	& $\Im[z]$			& $|z|$			& $f$ \\
 \midrule
-$z_1$ 	& 0.4766	& 0.8718			& 0.9936		& 0.1704 \\
-$z_2$	& 0.1845	& -0.9762			& 0.9935		& 0.7797 \\
+$z_1$ 	& 0.4766	& 0.8718			& 0.9936		& {\bf 0.1704} \\
+$z_2$	& 0.1845	& -0.9762			& 0.9935		& {\bf 0.7797} \\
 \bottomrule
 \end{tabular}
 \caption{Zeros of A(z)}
@@ -343,7 +342,7 @@ At each step, the algorithm computes $ y(k) = \mathbf{x}^T(k-1) \mathbf{c}(k)$ a
 \subsection*{Implementation and results}
 At the beginning, we decided to initialize the Wiener filter coefficients to zero and the input signal before $k=0$ to zero: $\mathbf{c}(0) = \mathbf{0}$, $x(k) = 0, \forall \, k<0$. \\
 Applying the algorithm on a single realization of the process we obtained a grassy behavior of the coefficients and the error.\\
-Using $k_{max} = 800$ iterations and update coefficient $\tilde{\mu} = 0.05$ resulted in convergence even before reaching $k_{max}$.\\
+Using $k_{max} = 800$ iterations and update coefficient $\tilde{\mu} = 0.05$ resulted in convergence before reaching $k_{max}$.\\
 Then we applied the LMS over 300 different realizations of the signal and took the average value for coefficients and error for each iteration. The behavior is much smoother than in the previous analysis, especially for $|e(k)|^2$.\\
 In Table \ref{tab:predopt} are reported the coefficients of the predictor at convergence, their optimal value, computed using (\ref{eq:yulewalker}) and their percentage difference.
 
