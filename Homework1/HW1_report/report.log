@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.23)  25 MAR 2018 21:35
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.26)  26 MAR 2018 11:49
 entering extended mode
 **./report.tex
 (report.tex
@@ -755,38 +755,41 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
 ]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 86.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 87.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
 
  []
 
 [1] [2]
+File: figs/choiceofn.png Graphic file (type bmp)
+<figs/choiceofn.png>
+ [3]
 File: figs/zplane.png Graphic file (type bmp)
 <figs/zplane.png>
- [3] [4]
+ [4] [5]
 File: figs/c1_1real.png Graphic file (type bmp)
 <figs/c1_1real.png>
 File: figs/c2_1real.png Graphic file (type bmp)
 <figs/c2_1real.png>
 
-Overfull \hbox (7.83322pt too wide) in paragraph at lines 334--337
+Overfull \hbox (7.83322pt too wide) in paragraph at lines 366--369
  [][][] 
  []
 
 File: figs/error_300real.png Graphic file (type bmp)
 <figs/error_300real.png>
-[5] [6] [7
+[6] [7
 
 ] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 17665 strings out of 427832
- 355381 string characters out of 3152395
- 459528 words of memory out of 3000000
- 21283 multiletter control sequences out of 15000+200000
+ 17671 strings out of 427832
+ 355489 string characters out of 3152395
+ 458528 words of memory out of 3000000
+ 21288 multiletter control sequences out of 15000+200000
  53155 words of font info for 79 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  55i,10n,82p,455b,803s stack positions out of 5000i,500n,10000p,200000b,50000s

@@ -90,7 +90,7 @@ end
 figure('Name', 'J over N');
 plot(1:t,Jvect);
 title('J_{min} over N');
-xlim([1 t]);
+xlim([1 t/4]);
 xlabel('N'); ylabel('J_{min}');
 % coeff=[1; copt];
 % A = tf([1 copt.'], 1,1);

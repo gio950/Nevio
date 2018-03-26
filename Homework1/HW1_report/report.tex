@@ -41,7 +41,7 @@
 \subsection*{Input signal}
 The random process to simulate is:
 \begin{equation}
-x(k)=e^{j2\pi f_1 k +\phi_1} + 0.8e^{j2\pi f_2 k +\phi_2} + w(k)
+x(k)=e^{j(2\pi f_1 k +\phi_1)} + 0.8e^{j(2\pi f_2 k +\phi_2)} + w(k)
 \end{equation}
 \noindent where $f_1=0.17$ and $f_2=0.78$ are the normalized frequencies of the exponential signals, $\phi_1$ and $\phi_2$ their initial phases considered as uniformly distributed in the interval $ [0,2\pi)$. The added noise $w(k)$ is a r.p. that follows a complex Gaussian distribution with zero mean and variance $\sigma_w^2$.
 The simulation of this process has been carried out for $K=800$ samples of a single realization.
@@ -63,7 +63,8 @@ x^*(k-n)= \Big(1-\frac{|n|}{K}\Big)\hat{\mathtt{r}}_x(n)
 The variance of the estimate gets larger and larger as $n$ approaches $K$. For this reason the number of samples that provide a reliable estimate ($=L$) is much lower than the length of $x(k)$. In the following analysis we will state in each method the value of $L$ used.
 
 \subsection*{Blackman and Tukey Correlogram}
-This estimator uses the autocorrelation unbiased estimation $\{{\hat{\mathtt{r}}_x(n)}\}, n = -L,\dots, L$. Since the autocorrelation estimate is unbiased, also the estimator is unbiased.
+This estimator uses the autocorrelation unbiased estimation $\{{\hat{\mathtt{r}}_x(n)}\}, n = -L,\dots, L$.\\
+Since the autocorrelation estimate is unbiased, also the estimator is unbiased.
 \begin{equation}
 \mathcal{P}_{BT}(f) = T_c\sum_{n=-L}^{L} \mathtt{w}(n)\hat{\mathtt{r}}_x(n)e^{-j2\pi f n T_c}
 \end{equation}
@@ -180,8 +181,8 @@ The coefficients $a_1, a_2, ..., a_N$ can be computed using the Yule-Walker equa
 \mathtt{r}_x(N-1)	&	\mathtt{r}_x(N-2)	& \cdots &	\mathtt{r}_x(0)
 \end{bmatrix}
 \end{equation}
-and $ \mathbf{r} = [\mathtt{r}_x(1),  \mathtt{r}_x(2),  \mathtt{r}_x(N)]^T $ the vector $\mathbf{a}$ of the coefficients of the AR model is given by
-\begin{equation}\label{eq:yukewalker}
+and $ \mathbf{r} = [\mathtt{r}_x(1),  \mathtt{r}_x(2),  \mathtt{r}_x(N)]^T $, the vector $\mathbf{a}$ of the coefficients of the AR model is given by
+\begin{equation}\label{eq:yulewalker}
 	\mathbf{R} \, \mathbf{a} = - \mathbf{r}
 \end{equation}
 If $\mathbf{R}$ admits inverse (matrix is not ill conditioned), we obtain
@@ -192,16 +193,31 @@ The variance $\sigma_w ^2$ of the white noise $w(k)$ is then
 \begin{equation}
 	\sigma_w ^2 = \mathtt{r}_x(0) + \mathbf{r}^H \mathbf{a}
 \end{equation}
-In our homework, we checked that the autocorrelation matrix $\mathbf{R}$ is indeed well conditioned, hence the solution does make sense.
+
+To choose the parameter $N$ we decided to analyze the behavior of the cost function $J_{min} = \mathtt{r}_x(0) + \mathbf{r}_n^H \mathbf{a}$ in function of the number $N$ (from $1$ to $20$) of the coefficients.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{choiceofn}
+	\caption{$J_{min}$ over $N$}
+	\label{fig:choiceofn}
+\end{figure}
+
+From Figure \ref{fig:choiceofn} it can be seen that a suitable choice is $N=2$.\\
+Using this value the autocorrelation matrix $\mathbf{R}$ is indeed well conditioned, hence the solution is acceptable.
 
 \subsection*{Results}
+In Figure REF it is shown the power spectral density estimation using the methods described above, along with its actual value.
 
 \section*{Problem 2}
 
+\subsection*{Input signal}
+In this case the input signal is the same as Section 1, except for the noise variance which now is $\sigma_w^2 = 2$.
+
 \subsection*{Results}
+In Figure REF it is shown the power spectral density estimation using the same methods of Problem 1, along with its actual value.
 
 \section*{Problem 3}
-
 The coefficients for the optimal error predictor are given by $ \mathbf{c} = -\mathbf{a}$, where the vector $\mathbf{a}$ is given by the coefficients of the AR model.
 
 \begin{figure}[H]
@@ -325,6 +341,22 @@ At the beginning, we decided to initialize the Wiener filter coefficients to zer
 Applying the algorithm on a single realization of the process we obtained a grassy behavior of the coefficients and the error.\\
 Using $k_{max} = 800$ iterations and update coefficient $\tilde{\mu} = 0.05$ resulted in convergence even before reaching $k_{max}$.\\
 Then we applied the LMS over 300 different realizations of the signal and took the average value for coefficients and error for each iteration. The behavior is much smoother than in the previous analysis, especially for $|e(k)|^2$.\\
+In Table \ref{tab:predopt} are reported the coefficients of the predictor at convergence and their optimal value,computed using (\ref{eq:yulewalker}):
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|cc|c|cc|c}
+	\toprule
+	Coefficient	& $\Re[c_{predictor}]$ 	& $\Re[c_{opt}]$	& Difference ($\%$)	& $\Im[c_{predictor}]$	& $\Im[c_{opt}]$ & Difference ($\%$) \\
+	\midrule
+	$c_1$ 	& 0.6612	& 0.6650			& 0.57 & -0.1045		& -0.1008 & 3.67 \\
+	$c_2$	& -0.9390	& -0.9416			& 0.27 & 0.3045		& 0.3055 & 0.03 \\
+	\bottomrule
+	\end{tabular}
+	\caption{Prediction and optimal coefficients}
+	\label{tab:predopt}
+\end{table}
+
 In Figure \ref{fig:coeff1} it is shown the behavior of the coefficients $c_i, \, i=1,2$,  their mean across 300 realizations (as $k$ increases) and the optimal solution by the Wiener-Hopf equation.\\
 In Figure \ref{fig:err300} it is shown the behavior of the cost function $J(k) = E \left[ |e(k)|^2 \right]$  across 300 realizations and its optimal solution $J_{min}$, as the number of iterations $k$ increases.
 
