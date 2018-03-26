@@ -1,4 +1,4 @@
-function [welch_est] = welchPSD(inputsig, window, overlaps)
+function [welch_est, Ns] = welchPSD(inputsig, window, overlaps)
 % Length of the window
 D = length(window);
 % Length of input signal
@@ -20,4 +20,5 @@ for s = 0:(N_s-1)
 end
 % Sum of all periodograms
 welch_est = sum(P_per, 2) * (1/N_s);
+Ns = length(welch_est);
 end

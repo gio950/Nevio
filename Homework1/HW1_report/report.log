@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.26)  26 MAR 2018 12:47
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.26)  26 MAR 2018 13:11
 entering extended mode
 **./report.tex
 (report.tex
@@ -767,6 +767,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 86--88
 [1] [2]
 File: figs/choiceofn.png Graphic file (type bmp)
 <figs/choiceofn.png>
+File: figs/estimatedpsd01.png Graphic file (type bmp)
+<figs/estimatedpsd01.png>
  [3]
 File: figs/zplane.png Graphic file (type bmp)
 <figs/zplane.png>
@@ -776,22 +778,22 @@ File: figs/c1_1real.png Graphic file (type bmp)
 File: figs/c2_1real.png Graphic file (type bmp)
 <figs/c2_1real.png>
 
-Overfull \hbox (7.83322pt too wide) in paragraph at lines 363--366
+Overfull \hbox (7.83322pt too wide) in paragraph at lines 370--373
  [][][] 
  []
 
 File: figs/error_300real.png Graphic file (type bmp)
 <figs/error_300real.png>
-[6] [7
+[6] [7] [8
 
 ] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 17671 strings out of 427832
- 355489 string characters out of 3152395
+ 17676 strings out of 427832
+ 355609 string characters out of 3152395
  458528 words of memory out of 3000000
- 21288 multiletter control sequences out of 15000+200000
+ 21292 multiletter control sequences out of 15000+200000
  53155 words of font info for 79 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  55i,10n,82p,455b,803s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on report.pdf (8 pages).
+Output written on report.pdf (9 pages).

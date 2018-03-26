@@ -34,9 +34,11 @@ xlabel('f');
 ylabel('Amplitude (dB)');
 ylim([-15 30]);
 %}
+
 % Periodogram
 X=fft(x);
 Pper=(1/Nsamples)*(abs(X)).^2;
+
 %{
 figure,
 plot(1/Nsamples:1/Nsamples:1,10*log10(Pper))
@@ -131,6 +133,7 @@ legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Actual va
 hold off;
 xlabel('Normalized frequency');
 ylabel('Estimated PSD (dB)');
+ylim([-30 30]);
 
 [H, www] = freqz([1; a], 1, Nsamples, 'whole');
 figure('Name', 'Z-plane for error predictor A(z)');
