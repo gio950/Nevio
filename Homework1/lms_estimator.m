@@ -77,7 +77,7 @@ figure('Name', 'Error function');
 plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter), 1:max_iter, 10*log10(mean_error));
 
 title('Error function at each iteration');
-legend('|e(k)|^2', '\sigma_w^2','J_{min}');
+legend('|e(k)|^2', 'J_{min}','J(k)');
 ylim([-15 10])
 xlabel('k')
 ylabel('|e(k)|^2, J_{min}, \sigma_w^2')

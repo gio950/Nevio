@@ -303,7 +303,7 @@ The coefficients for the optimal error predictor are given by $ \mathbf{c} = -\m
 	\label{fig:zpln}
 \end{figure}
 
-Knowing the coefficients of the best predictor we can write the extended expression of its transfer function $A(z)$. The presence of "discrete" components in the spectrum can be detected by looking at the zeros of $A(z)$, because they coincide with the poles of the transfer function of the AR filter: poles near the unit circle result in peaks in the frequency response $1/A(f)$ and so also peaks in the PSD estimate obtained with the AR model (see equation (11)). In our specific case we can see in figure \ref{fig:zpln} that we have the two zeros of $A(z)$ near the unit circle and by computing their frequencies we can infer the frequencies of the discrete components in the spectrum of the signal $x(k)$. To obtain the correct numerical value we need to normalize the frequencies over $2\pi$.
+Knowing the coefficients of the best predictor we can write the extended expression of its transfer function $A(z)$. The presence of "discrete" components in the spectrum can be detected by looking at the zeros of $A(z)$ because they coincide with the poles of the transfer function of the AR filter: poles near the unit circle result in peaks in the frequency response $1/A(f)$ and so also peaks in the PSD estimate obtained with the AR model (see equation (11)). In our specific case we can see in figure \ref{fig:zpln} that we have the two zeros of $A(z)$ near the unit circle and by computing their frequencies we can infer the frequencies of the discrete components in the spectrum of the signal $x(k)$. To obtain the correct numerical value we need to normalize the frequencies over $2\pi$.
 In Table \ref{tab:errpred} the zeros of the transfer function $A(z)$ are reported, along with their magnitude and phase, proving that up to a certain level of precision we can compute $f_1$ and $f_2$ from the transfer function of the predictor without using the Fourier transform of the signal.
 
 \begin{table}[H]
@@ -361,7 +361,7 @@ In Table \ref{tab:predopt} are reported the coefficients of the predictor at con
 \end{table}
 
 In Figure \ref{fig:coeff1} it is shown the behavior of the coefficients $c_i, \, i=1,2$,  their mean across 300 realizations (as $k$ increases) and the optimal solution by the Wiener-Hopf equation.\\
-In Figure \ref{fig:err300} it is shown the behavior of the cost function $J(k) = E \left[ |e(k)|^2 \right]$  across 300 realizations and its optimal solution $J_{min}$, as the number of iterations $k$ increases.
+In Figure \ref{fig:err300} it is shown the behavior of the cost function $J(k) = E \left[ |e(k)|^2 \right]$  across 300 realizations, the values of $|e(k)|^2$ obtained with the LMS algorithm and the solution of the direct method $J_{min}$, as the number of iterations $k$ increases.
 
 \begin{figure}[H]
 	\centering
@@ -389,7 +389,7 @@ In Figure \ref{fig:err300} it is shown the behavior of the cost function $J(k) =
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{error_300real}
-	\caption{Mean squared error by averaging over 300 realizations}
+	\caption{Mean squared error obtained with LMS (blue), by averaging over 300 realizations (yellow) and with the direct method.}
 	\label{fig:err300}
 \end{figure}
 
