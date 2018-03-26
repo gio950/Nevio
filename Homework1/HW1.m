@@ -46,11 +46,10 @@ ylabel('Amplitude (dB)')
 ylim([-15 30])
 %}
 % Welch periodogram
-S=35;   %overlap
-D=70;   %window length
-Ns=floor((L-D)/(D-S) + 1);
+S=80;   %overlap
+D=160;   %window length
 w_welch=window(@hamming,D);
-Welch_P = welchPSD(x, w_welch, S);
+[Welch_P, Ns] = welchPSD(x, w_welch, S);
 var_Welch=Welch_P.^2/Ns;
 
 %{
@@ -65,18 +64,29 @@ ylim([-15 30])
 
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
-
+%sigmaw=0.1
 b = zeros(1,800);
 for i=1:length(b)
     b(i) = 10*log10(0.1);
 end
 
 % 30 is random choice just to see the plot
-b(ceil(0.17*800)) = 30;
-b(ceil(0.78*800)) = 30;
+b(ceil(0.17*800)) = 10*log10(Nsamples);
+b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
+%sigmaw=2
+%{
+b = zeros(1,800);
+for i=1:length(b)
+    b(i) = 10*log10(2);
+end
+
+% 30 is random choice just to see the plot
+b(ceil(0.17*800)) = 10*log10(Nsamples);
+b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
+%}
 %% Choice of N
-N = 2;
+N = 3;
 
 [copt, Jmin]=predictor(rx, N);
 t=20;
@@ -90,7 +100,7 @@ end
 figure('Name', 'J over N');
 plot(1:t,Jvect);
 title('J_{min} over N');
-xlim([1 t/4]);
+xlim([1 t]);
 xlabel('N'); ylabel('J_{min}');
 % coeff=[1; copt];
 % A = tf([1 copt.'], 1,1);
