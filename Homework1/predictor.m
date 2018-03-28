@@ -1,6 +1,6 @@
-function [copt, Jmin]=predictor(rx, N)
+function [copt, Jmin, det_R]=predictor(rx, N)
 
-[a, sw, det_R]=findAR(N, rx);
+[a, sw ]=findAR(N, rx);
 copt=-a;
 Jmin=sw;
 

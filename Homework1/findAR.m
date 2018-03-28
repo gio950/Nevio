@@ -6,9 +6,10 @@ function [a, sw, det_R]=findAR(N, rx)
 %of the white process
 
 col=rx(1:N);
-row=conj(col);
+% row=conj(col);
 %construct the autocorrelation matrix NxN
-R=toeplitz(col, row);
+% R=toeplitz(col, row);
+R=toeplitz(col);
 %compute the vector r
 r=rx(2:N+1);
 %compute the coefficients

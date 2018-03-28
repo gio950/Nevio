@@ -1,0 +1,104 @@
+\documentclass[a4paper,11pt,openright,twoside]{report}
+
+\usepackage{graphics}
+\usepackage[british,UKenglish,USenglish,american]{babel}
+\usepackage[infoshow,debugshow]{tabularx}
+\usepackage{url,amsfonts,epsfig}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{newlfont}
+\usepackage{booktabs}
+\usepackage{caption} 
+\usepackage{titlesec}
+\usepackage{braket}
+\usepackage{subfig}
+\usepackage{ragged2e}
+\captionsetup{tableposition=top,figureposition=bottom,font=small}
+\usepackage[a4paper,bottom=2cm,top=2cm,headheight=14pt,includehead,includefoot,marginparwidth=4cm,marginparsep=0.5cm,inner=2cm,outer=5cm,heightrounded]{geometry}
+
+\setlength{\voffset}{-0.5in}
+\setlength{\topmargin}{-0.2in}
+\setlength{\textheight}{240mm}
+\setlength{\textwidth}{142mm}
+\setlength{\evensidemargin}{0.3in}
+\setlength{\oddsidemargin}{0.3in}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+\begin{minipage}[b]{0.20\textwidth}    %% b or t, default is c
+	\centering
+	\includegraphics[height=2.5cm]{unipd}
+\end{minipage}%
+\begin{minipage}[b][2cm]{0.6\textwidth}
+	\centering\large \sc
+	University of Padua \vfill
+	Degree Course in \\ ICT for Internet and Multimedia\vfill
+	\small Academic Year 2017/2018 \end{minipage}%
+\begin{minipage}[b]{0.20\textwidth}
+	\centering 
+	\includegraphics[height=2.5cm]{dei}
+\end{minipage}
+
+\vspace*{20pt}
+\begin{center}\leavevmode
+	\normalfont
+	{\huge\raggedleft \bfseries\textsf{ \boldmath{$1^{st}$} Homework}\par}%
+	\hrulefill\par
+	{\LARGE\raggedright \textsf{\bfseries SANTI GIOVANNI - 1177739}\par}%
+	%    {\Large \@date\par}%
+	\vspace*{20pt}
+	{\LARGE\raggedright \textsf{\bfseries VANIN EDOARDO - 1179018}\par}%
+	%    {\Large \@date\par}%
+	\vspace*{20pt}
+\end{center}	
+	
+\section*{PROBLEM 1}
+Given a single realization of 800 i.i.d. samples of the r.p $ \left\lbrace x(k) \right\rbrace$ defined by:
+\begin{equation*}
+x(k) = e^{j(2 \pi f_1k+\varphi_1)}+0.8e^{j(2 \pi f_2k+\varphi_2)}+w(k)
+\end{equation*}
+where $w(k)\sim \mathcal{CN}(0,\sigma_w^2)$, $f_1=0.17$, $f_2 = 0.78$, $\sigma_w^2=2.0$ $\varphi_{1,2}\sim \mathcal{U}(0,2\pi)$ are statistically independent, we want to estimate the $\mathcal{PSD}$ of $ \left\lbrace x(k) \right\rbrace$ using the following models:
+
+\subsection*{BLACKMAN AND TUKEY CORRELOGRAM}
+\begin{equation}
+\mathcal{P}(F) = T_c \sum_{n=-L}^{L} w(n)\hat{r}_x(n)e^{-j2\pi fnT_c}
+\end{equation}
+where $\hat{r}_x(n)$ is the autocorrelation of x taken from -L to L and $w(n)$ is a Hamming window of length 2L+1. The autocorrelation function is evaluated using the \textit{unbiased estimate} give by:
+\begin{equation*}
+\hat{r}_x(n) = \frac{1}{K-n}\sum_{k=n}^{K-1}x(k)x^*(k-n) \quad \quad n = 0,1,...,K-1
+\end{equation*}
+where K is the number of samples. In ordert to reduce the variance of the estimate, we chose $L=\lfloor \frac{K}{5} \rfloor$. The hamming window is defined by:
+\begin{equation*}
+w(k) = \begin{cases}
+       0.54 + 0.46 \cos \left(2\pi \frac{k-\frac{D-1}{2}}{D-1} \right) \quad \quad k=0,1,...,D-1 \\
+       0 \quad \quad \quad \quad \quad \quad \quad \quad \quad\quad \quad \quad \quad \quad elsewhere
+       \end{cases}
+\end{equation*} 
+
+
+\subsection*{PERIODOGRAM}
+\begin{equation}\label{Per}
+\mathcal{P}_{PER}(f) = \frac{1}{KT_c} | \tilde{\mathcal{X}}(f) |
+\end{equation}
+where $\tilde{\mathcal{X}}(f) = T_c \mathcal{X}(f)$, $\mathcal{X}(f)$ is the Fourier Transform of $ \left\lbrace x(k) \right\rbrace$, $k = 0,1,...,K-1$.
+
+\subsection*{WELCH PERIODOGRAM}
+\begin{equation*}
+\mathcal{P}_{WE}(F) = \frac{1}{N_s}\sum_{x=0}^{N_s-1}\mathcal{P}_{PER}^{(s)}(f)
+\end{equation*}
+where $\mathcal{P}_{PER}^{(s)}(F)$ is the periodogram estimate given by Eq.\ref{Per}.  
+The model extracs different subsequences of consecutive D samples which eventually overlap. If $x^{(s)}$ is the s-th subsequence, characterized by S samples in common with the previous subsequence $x^{(s-1)}$ and with the following $x^{(s+1)}$, the total number of subsequences is $N_s = \lfloor \frac{K-D}{D-S}-1 \rfloor$. In our analysis, we chose S=?? and D=??. \\
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+\end{document}

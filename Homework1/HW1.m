@@ -1,8 +1,10 @@
-clc; close all; clear global; clearvars;
+clc; 
+close all; 
+clear global; clearvars;
 
 %% LOAD 1 REALIZATION OF THE PROCESS
 
-load('inputsignal01.mat', 'x');
+load('aaaaa', 'x');
 
 Nsamples=length(x);
 
@@ -20,20 +22,19 @@ w_hamming=window(@hamming,2*L+1);
 Pbt1=correlogram(x, w_hamming, rx, L);
 Pbt2=correlogram(x, w_rect, rx, L);
 
-%{
-figure();
-subplot(2,1,1);
-plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1)));
-title('Correlogram - Hamming');
-ylabel('Amplitude (dB)');
-xlabel('f');
-subplot(2,1,2);
-plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt2)));
-title('Correlogram - rect');
-xlabel('f');
-ylabel('Amplitude (dB)');
-ylim([-15 30]);
-%}
+
+% figure();
+% plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1))); hold on
+% title('Correlogram - Hamming');
+% ylabel('Amplitude (dB)');
+% xlabel('f');
+% plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt2)));
+% title('Correlogram - rect');
+% xlabel('f');
+% ylabel('Amplitude (dB)');
+% ylim([-15 30]);
+% legend('Hamming','Rect');
+
 
 % Periodogram
 X=fft(x);
@@ -47,9 +48,10 @@ xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
 %}
+
 % Welch periodogram
 S=80;   %overlap
-D=160;   %window length
+D=100;   %window length
 w_welch=window(@hamming,D);
 [Welch_P, Ns] = welchPSD(x, w_welch, S);
 var_Welch=Welch_P.^2/Ns;
@@ -67,17 +69,17 @@ ylim([-15 30])
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
 %sigmaw=0.1
-b = zeros(1,800);
-for i=1:length(b)
-    b(i) = 10*log10(0.1);
-end
+% b = zeros(1,800);
+% for i=1:length(b)
+%     b(i) = 10*log10(0.1);
+% end
 
 % 30 is random choice just to see the plot
 b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
 %sigmaw=2
-%{
+
 b = zeros(1,800);
 for i=1:length(b)
     b(i) = 10*log10(2);
@@ -88,9 +90,8 @@ b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 %}
 %% Choice of N
-N = 3;
-
-[copt, Jmin]=predictor(rx, N);
+N = 20;
+[copt, Jmin ]=predictor(rx, N);
 t=20;
 Jvect=zeros(t,1);
 
@@ -104,9 +105,9 @@ plot(1:t,Jvect);
 title('J_{min} over N');
 xlim([1 t]);
 xlabel('N'); ylabel('J_{min}');
-% coeff=[1; copt];
-% A = tf([1 copt.'], 1,1);
-% figure, pzmap(A)
+coeff=[1; copt];
+A = tf([1 copt.'], 1,1);
+figure, pzmap(A)
 
 %% AR model
 % Coefficients of Wiener filter

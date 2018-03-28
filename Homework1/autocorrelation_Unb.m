@@ -4,7 +4,6 @@ function [rx]=autocorrelation_Unb(x)
 %OUTPUT: autocorrelation estimate vector rx of length K=length(x)
 %every index is augmented by 1 because matlab starts from 1 and not 0
 K=length(x);
-
 rx=zeros(K, 1);
    for n=1:K
       %first x that has k as argument

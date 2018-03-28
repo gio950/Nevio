@@ -26,4 +26,16 @@ end
 % Complex r.p. x(k), 800 samples
 x=xi+1i*xq;
 
-save('inputsignal2.mat', 'x');
+%
+[rx]=autocorrelation_Unb(x);
+L=floor(Nsamples/5);%L should be lower than the length of the r.p. because of the high variance when n approaches K
+rx=rx(1:L);
+N = 10;
+[copt, Jmin ]=predictor(rx, N);
+coeff=[1; copt];
+[a, s_white, d]=findAR(N, rx);
+zplane([1; a].', 1);
+[H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
+figure(), plot(omega/(2*pi), 10*log10(s_white*(abs(H_w)).^2), 'Color', 'm');
+
+% save('aaaaa.mat', 'x');
