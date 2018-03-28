@@ -75,8 +75,8 @@ ylim([-15 30])
 % end
 
 % 30 is random choice just to see the plot
-b(ceil(0.17*800)) = 10*log10(Nsamples);
-b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
+%b(ceil(0.17*800)) = 10*log10(Nsamples);
+%b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
 %sigmaw=2
 
@@ -88,7 +88,7 @@ end
 % 30 is random choice just to see the plot
 b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
-%}
+
 %% Choice of N
 N = 20;
 [copt, Jmin ]=predictor(rx, N);
@@ -105,10 +105,11 @@ plot(1:t,Jvect);
 title('J_{min} over N');
 xlim([1 t]);
 xlabel('N'); ylabel('J_{min}');
+%{
 coeff=[1; copt];
 A = tf([1 copt.'], 1,1);
 figure, pzmap(A)
-
+%}
 %% AR model
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);
