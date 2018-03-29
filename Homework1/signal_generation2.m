@@ -19,8 +19,8 @@ phi2=2*pi*rand(1);
 xi=zeros(Nsamples,1);
 xq=zeros(Nsamples,1);
 for k=1:Nsamples
-    xi(k)=cos(2*pi*f1*k+phi1)+cos(2*pi*f2*k+phi2)+wi(k);
-    xq(k)=sin(2*pi*f1*k+phi1)+sin(2*pi*f2*k+phi2)+wq(k);
+    xi(k)=cos(2*pi*f1*k+phi1)+0.8*cos(2*pi*f2*k+phi2)+wi(k);
+    xq(k)=sin(2*pi*f1*k+phi1)+0.8*sin(2*pi*f2*k+phi2)+wq(k);
 end
 
 % Complex r.p. x(k), 800 samples
@@ -38,4 +38,4 @@ coeff=[1; copt];
 [H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
 figure(), plot(omega/(2*pi), 10*log10(s_white*(abs(H_w)).^2), 'Color', 'm');
 
-% save('bbbbb.mat', 'x');
+% save('input_signal2.mat', 'x');

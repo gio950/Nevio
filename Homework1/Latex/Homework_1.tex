@@ -137,19 +137,63 @@ A comparison between different PSD estimates of $ \left\lbrace x(k) \right\rbrac
 
 \begin{figure}
 	\centering
-	\includegraphics[width=15cm]{images/PSD.jpg}
+	\includegraphics[width=14cm]{images/PSD.jpg}
 	\caption{PSD estimates.}\label{PSD} 
 \end{figure}
 
-The parameters of the different models are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, a the window used is a Hamming window definde in Eq. \ref{ham}. For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ still using an Hamming window. The order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. \ref{sigmavsN}.
+The parameters of the different models are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, and the window used is a Hamming window definde in Eq. \ref{ham}. For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ still using an Hamming window. This choise was made by observing different PSD estimates with varying values of S and D, as shown in Figure [\ref{WelchSD}]. The order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN}].
 
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/Welch_vs_SD.jpg}
+	\caption{Welch periodogram estimates as a function of different values of D and S.}\label{WelchSD}
+\end{figure}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=5cm]{images/sigma_vs_N.jpg}
+	\includegraphics[width=14cm]{images/sigma_vs_N.jpg}
 	\caption{Variance of the AR model white noise as a function of the order N.}\label{sigmavsN}
 \end{figure}
 
-It is easy to see that no significant keen occurs neither for high value of N, thus for this problem there is not a clean value that should be chosen.
+It is easy to see that no significant keen occurs neither for high value of N, thus for this problem there is not a clean value that should be chosen. On the other hand, a large N may result in an ill-conditioned autocorrelation matrix $\mathbf{R}$, this because of the presence of spectral lines in the original process.
+For all these reasons, we decided that N=?? was a good trade-off.
+
+\clearpage
+\section*{PROBLEM 2}
+The only differen with Problem 1 is the noise variance, which is $\sigma_w=0.1$. However, now the noise component is almost negligible with respect the usful signal, and then we were able to provide a much more accurate analysis. The different spectral estimates are given in Figure [\ref{PSD_2}]. \\
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=14cm]{images/PSD_2.jpg}
+	\caption{PSD estimates.}\label{PSD_2} 
+\end{figure}
+
+The parameters of the model are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, and the window used is a Bartlet window definde as
+\begin{equation}\label{Bart}
+w(k) = \begin{cases}
+1-2 \left | \frac{k-\frac{D-1}{2}}{D-1} \right | \quad \quad k=0,1,...,D-1 \\
+0 \quad \quad \quad \quad \quad \quad \quad \quad \quad\quad \quad \quad \quad \quad elsewhere
+\end{cases}
+\end{equation} 
+This choise was taken by comparing the PSD estimates obtained with different windows, respectively: \textit{Hamming}, \textit{Rectangular} and \textit{Bartlett}. As shown in Figure [\ref{Welch_2}], the last one has a much more accurate behaviour.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/Corr_vs_window.jpg}
+	\caption{PSD estimates.}\label{Welch_2} 
+\end{figure}
+
+For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ using an Hamming window. Again, this choise was taken by comparing the PSD estimates with varying values of D and S, given in FIgure [\ref{WelchSD_2}]. Finally, the order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN_2}]. Here it can be observed a knee in the function, which corresponds to a value of N=2.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/Welch_vs_SD_2.jpg}
+	\caption{Welch periodogram estimates as a function of different values of D and S.}\label{WelchSD_2}
+\end{figure}	
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=14cm]{images/sigma_vs_N_2.jpg}
+	\caption{Variance of the AR model white noise as a function of the order N.}\label{sigmavsN_2}
+\end{figure}	
 
 
 
@@ -159,6 +203,21 @@ It is easy to see that no significant keen occurs neither for high value of N, t
 
 
 
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}

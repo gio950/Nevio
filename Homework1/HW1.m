@@ -4,7 +4,7 @@ clear global; clearvars;
 
 %% LOAD 1 REALIZATION OF THE PROCESS
 
-load('sigma2_good.mat', 'x');
+load('inputsignal01.mat', 'x');
 Nsamples=length(x);
 
 %% SPECTRAL ANALYSIS
@@ -17,22 +17,23 @@ rx=rx(1:L);
 % Blackman-Tukey correlogram 
 % The length of 2*L+1 is because of page 86 note 24
 w_rect=window(@rectwin,2*L+1);
-w_hamming=window(@hamming,2*L+1);    
-Pbt1=correlogram(x, w_hamming, rx, L);
+w_hamming=window(@hamming,2*L+1); 
+w_bartlett=window(@bartlett,2*L+1);
+Pbt3=correlogram(x, w_hamming, rx, L);
 Pbt2=correlogram(x, w_rect, rx, L);
+Pbt1=correlogram(x, w_bartlett, rx, L);    % use Pbt3 for sigma=2
 
-
+% comparison of different window types
 % figure();
-% plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1))); hold on
-% title('Correlogram - Hamming');
-% ylabel('Amplitude (dB)');
-% xlabel('f');
+% hold on
+% plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt1)),'g'); 
 % plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt2)));
-% title('Correlogram - rect');
+% plot(1/Nsamples:1/Nsamples:1,10*log10(abs(Pbt3)),'r','Linewidth',2);
+% title('Correlogram vs window type');
 % xlabel('f');
 % ylabel('Amplitude (dB)');
 % ylim([-15 30]);
-% legend('Hamming','Rect');
+% legend('Hamming','Rect','Bartlett');
 
 
 % Periodogram
@@ -49,20 +50,36 @@ ylim([-15 30])
 %}
 
 % Welch periodogram
-S=60;   %overlap
+S=70;   %overlap
 D=100;   %window length
 w_welch=window(@hamming,D);
 [Welch_P, Ns] = welchPSD(x, w_welch, S);
 var_Welch=Welch_P.^2/Ns;
 
-%{
 figure('Name','Welch periodogram');
 plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
 title('Welch periodogram estimate of the PSD')
 xlabel('f')
 ylabel('Amplitude (dB)')
 ylim([-15 30])
-%}
+
+% Comparison of different S,D
+S = [20 50 70 100];
+D = [50 100 150 200];
+for i=1:4
+    w_welch=window(@hamming,D(i));
+    [Welch_P(:,i), Ns] = welchPSD(x, w_welch, S(i));
+    var_Welch=Welch_P(:,i).^2/Ns;
+end
+figure('Name','Welch periodogram as a function of D and S');
+plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
+title('Welch periodogram estimate of the PSD')
+xlabel('f')
+ylabel('Amplitude (dB)')
+ylim([0 25])
+grid
+legend(['D = ' int2str(D(1)) ' and S = ' int2str(S(1)) ], ['D = ' int2str(D(2)) ' and S = ' int2str(S(2)) ],['D = ' int2str(D(3)) ' and S = ' int2str(S(3)) ],['D = ' int2str(D(4)) ' and S = ' int2str(S(4)) ]);
+    
 
 
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
@@ -89,7 +106,7 @@ b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
 %% Choice of N
-N =20;
+N =2;
 [copt, Jmin ]=predictor(rx, N);
 t=20;
 Jvect=zeros(t,1);
@@ -109,13 +126,13 @@ coeff=[1; copt];
 A = tf([1 copt.'], 1,1);
 figure, pzmap(A)
 %}
-upp_limit = 30;
+upp_limit = 10;
 sigma_w = zeros(1, upp_limit);
 for N = 1:upp_limit
    [~, sigma_w(N)] = findAR(N, rx);
 end
 figure, plot(1:upp_limit, 10*log10(sigma_w)), grid
-% title('sigma_w of the AR model of the spectral lines')
+title('Variance of the AR model of the spectral lines')
 ylabel('$\sigma_w$ [dB]'), xlabel('Order of the AR(N) model')
 %% AR model
 % Coefficients of Wiener filter
