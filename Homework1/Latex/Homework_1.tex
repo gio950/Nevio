@@ -27,7 +27,7 @@
 \begin{document}
 \begin{minipage}[b]{0.20\textwidth}    %% b or t, default is c
 	\centering
-	\includegraphics[height=2.5cm]{unipd}
+	\includegraphics[height=2.5cm]{images/unipd}
 \end{minipage}%
 \begin{minipage}[b][2cm]{0.6\textwidth}
 	\centering\large \sc
@@ -36,7 +36,7 @@
 	\small Academic Year 2017/2018 \end{minipage}%
 \begin{minipage}[b]{0.20\textwidth}
 	\centering 
-	\includegraphics[height=2.5cm]{dei}
+	\includegraphics[height=2.5cm]{images/dei}
 \end{minipage}
 
 \vspace*{20pt}
@@ -68,12 +68,12 @@ where $\hat{r}_x(n)$ is the autocorrelation of x taken from -L to L and $w(n)$ i
 \hat{r}_x(n) = \frac{1}{K-n}\sum_{k=n}^{K-1}x(k)x^*(k-n) \quad \quad n = 0,1,...,K-1
 \end{equation*}
 where K is the number of samples. In ordert to reduce the variance of the estimate, we chose $L=\lfloor \frac{K}{5} \rfloor$. The hamming window is defined by:
-\begin{equation*}
+\begin{equation}\label{ham}
 w(k) = \begin{cases}
        0.54 + 0.46 \cos \left(2\pi \frac{k-\frac{D-1}{2}}{D-1} \right) \quad \quad k=0,1,...,D-1 \\
        0 \quad \quad \quad \quad \quad \quad \quad \quad \quad\quad \quad \quad \quad \quad elsewhere
        \end{cases}
-\end{equation*} 
+\end{equation} 
 
 
 \subsection*{PERIODOGRAM}
@@ -83,13 +83,73 @@ w(k) = \begin{cases}
 where $\tilde{\mathcal{X}}(f) = T_c \mathcal{X}(f)$, $\mathcal{X}(f)$ is the Fourier Transform of $ \left\lbrace x(k) \right\rbrace$, $k = 0,1,...,K-1$.
 
 \subsection*{WELCH PERIODOGRAM}
-\begin{equation*}
+\begin{equation}
 \mathcal{P}_{WE}(F) = \frac{1}{N_s}\sum_{x=0}^{N_s-1}\mathcal{P}_{PER}^{(s)}(f)
+\end{equation}
+where $\mathcal{P}_{PER}^{(s)}(f)$ is the periodogram estimate given by Eq.\ref{Per}.  
+The model extracts different subsequences of consecutive D samples which eventually overlap. If $x^{(s)}$ is the s-th subsequence, characterized by S samples in common with the previous subsequence $x^{(s-1)}$ and with the following $x^{(s+1)}$, the total number of subsequences is $N_s = \lfloor \frac{K-D}{D-S}-1 \rfloor$. In our analysis, we chose S=?? and D=??. \\
+More in details, we computed:
+\begin{equation*}
+\begin{split}
+x^{(s)}(k) &= w(k)x(k+s(D_S))   \quad \quad k=0,1,...,D-1 \quad s = 0,1,...,N_s-1 \\
+\tilde{\mathcal{X}}^{(s)}(f) &= \mathcal{F}[x^{(s)}(k)] = T_c\sum_{k=0}^{D-1}x^{(s)}(k)e^{-j2 \pi fkT_c} \\
+\mathcal{P}^{(s)}_{PER}(f) &= \frac{1}{DT_cM_w} \left | \tilde{\mathcal{X}}^{(s)}(f) \right |^2
+\end{split}
 \end{equation*}
-where $\mathcal{P}_{PER}^{(s)}(F)$ is the periodogram estimate given by Eq.\ref{Per}.  
-The model extracs different subsequences of consecutive D samples which eventually overlap. If $x^{(s)}$ is the s-th subsequence, characterized by S samples in common with the previous subsequence $x^{(s-1)}$ and with the following $x^{(s+1)}$, the total number of subsequences is $N_s = \lfloor \frac{K-D}{D-S}-1 \rfloor$. In our analysis, we chose S=?? and D=??. \\
+where $w(k)$ is the hamming window difined by Eq. \ref{ham} and $M_w = \frac{1}{D}\sum_{k=0}^{D-1}w^2(k)$ is the normalized energy of the window.
 
+\subsection*{AR(N) MODEL}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=5cm]{AR}
+%	\caption{AR model of a process x.}\label{AR} 
+%\end{figure}
+\begin{equation}\label{E_AR}
+\mathcal{P}_{AR}(f) = \frac{T_c \sigma_w^2}{\left | \mathcal{A}(f) \right |^2}
+\end{equation}
+The output process is described by the following recursive e equation
+\begin{equation}\label{coeff}
+x(k) = -\sum_{n=1}^{N} a_nx(k-n)+w(k)
+\end{equation}
+where $w$ is white noise with variance $\sigma_w^2$. The transfer function of this system is given by
+$ H_{AR} = \frac{1}{A(z)} $ where $ A(z) = 1+\sum_{n=1}^Na_nz^{-n}$. The ACS of \textit{x} in z-domain is easily evaluated using 
+\begin{equation*}
+P_x(z) = \frac{\sigma_w^2}{A(z)A^*(\frac{1}{z^*})}
+\end{equation*}
+from which Eq. \ref{E_AR} is computed letting $\mathcal{A}(f) = A(e^{j2\pi f T_c})$. \\
+Coefficients $a_1,a_2,...,a_N$ are computed exploiting the \textit{Yule-Walker equation}
+ $\mathbf{a} = -\mathbf{R}^{-1}\mathbf{r}$, where $ r = \left[ r(1),r(2), \dots, r(N) \right] $ and the \textit{autocorrelation matrix} is defined as
+\begin{equation*}
+\mathbf{R} = \begin{pmatrix}
+    r(0) & r(-1) & \dots & r(_N+1) \\
+    r(1) & r(0) & \dots & r(-N+2) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    r(N-1) & r(N-2) &  \dots & r(0)
+    \end{pmatrix}
+\end{equation*}
+The noise variance deriving from the model is 
+\begin{equation}\label{sigmaw}
+\sigma_w^2 = r_x(0) + \mathbf{r}^H\mathbf{a}
+\end{equation}
 
+\subsection*{CONCLUSIONS}
+A comparison between different PSD estimates of $ \left\lbrace x(k) \right\rbrace$ is now discussed. The difficulties in this problem were related to the fact that the noise variance is double with respect to the maximum amplitude of the usefull signal. For this reason, a good analysis can be achieved only by considering a generated sequence $ \left\lbrace x(k) \right\rbrace$ which is not too corrupted at the carriers frequencies $f_1$ and $f_2$. The four different PSD estimates are shown in Figure [\ref{PSD}]. \\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=15cm]{images/PSD.jpg}
+	\caption{PSD estimates.}\label{PSD} 
+\end{figure}
+
+The parameters of the different models are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, a the window used is a Hamming window definde in Eq. \ref{ham}. For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ still using an Hamming window. The order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. \ref{sigmavsN}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=5cm]{images/sigma_vs_N.jpg}
+	\caption{Variance of the AR model white noise as a function of the order N.}\label{sigmavsN}
+\end{figure}
+
+It is easy to see that no significant keen occurs neither for high value of N, thus for this problem there is not a clean value that should be chosen.
 
 
 

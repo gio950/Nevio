@@ -4,8 +4,7 @@ clear global; clearvars;
 
 %% LOAD 1 REALIZATION OF THE PROCESS
 
-load('aaaaa', 'x');
-
+load('sigma2_good.mat', 'x');
 Nsamples=length(x);
 
 %% SPECTRAL ANALYSIS
@@ -50,7 +49,7 @@ ylim([-15 30])
 %}
 
 % Welch periodogram
-S=80;   %overlap
+S=60;   %overlap
 D=100;   %window length
 w_welch=window(@hamming,D);
 [Welch_P, Ns] = welchPSD(x, w_welch, S);
@@ -90,7 +89,7 @@ b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
 %% Choice of N
-N = 20;
+N =20;
 [copt, Jmin ]=predictor(rx, N);
 t=20;
 Jvect=zeros(t,1);
@@ -110,6 +109,14 @@ coeff=[1; copt];
 A = tf([1 copt.'], 1,1);
 figure, pzmap(A)
 %}
+upp_limit = 30;
+sigma_w = zeros(1, upp_limit);
+for N = 1:upp_limit
+   [~, sigma_w(N)] = findAR(N, rx);
+end
+figure, plot(1:upp_limit, 10*log10(sigma_w)), grid
+% title('sigma_w of the AR model of the spectral lines')
+ylabel('$\sigma_w$ [dB]'), xlabel('Order of the AR(N) model')
 %% AR model
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);
@@ -124,18 +131,20 @@ ylim([-15 40]);
 %}
 %% Final spectral plot
 figure('Name', 'Spectral Analysis');
+set(0,'defaultTextInterpreter','latex')          % to use LaTeX format
+set(gca,'FontSize',10);
 hold on;
-plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot((1:Nsamples)/Nsamples, 10*log10(abs(Pbt1)), 'Color', 'b')
 plot((1:Nsamples)/Nsamples, 10*log10(Pper), 'g:')
+plot((1:Nsamples)/Nsamples, 10*log10(Welch_P), 'r-.')
 plot(omega/(2*pi), 10*log10(s_white*(abs(H_w)).^2), 'Color', 'm');
 plot((1:Nsamples)/Nsamples, b, 'k:');
 title('Spectral analysis');
-legend('Welch', 'Correlogram', 'Periodogram', ['AR(' int2str(N) ')'], 'Actual value', 'Location', 'SouthWest');
+legend('Correlogram', 'Periodogram', 'Welch', ['AR(' int2str(N) ')']);
 hold off;
 xlabel('Normalized frequency');
 ylabel('Estimated PSD (dB)');
-ylim([-30 30]);
+ylim([-15 30]);
 
 [H, www] = freqz([1; a], 1, Nsamples, 'whole');
 figure('Name', 'Z-plane for error predictor A(z)');

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.26)  28 MAR 2018 11:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.26)  29 MAR 2018 11:30
 entering extended mode
 **./Homework_1.tex
 (Homework_1.tex
@@ -427,16 +427,16 @@ LaTeX Info: Redefining \selectfont on input line 27.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<unipd.png, id=1, 943.525pt x 949.5475pt>
-File: unipd.png Graphic file (type png)
- <use unipd.png>
-Package pdftex.def Info: unipd.png used on input line 30.
+<images/unipd.png, id=1, 943.525pt x 949.5475pt>
+File: images/unipd.png Graphic file (type png)
+ <use images/unipd.png>
+Package pdftex.def Info: images/unipd.png used on input line 30.
 (pdftex.def)             Requested size: 70.67493pt x 71.13188pt.
 
-<dei.png, id=2, 1195.70715pt x 778.70924pt>
-File: dei.png Graphic file (type png)
- <use dei.png>
-Package pdftex.def Info: dei.png used on input line 39.
+<images/dei.png, id=2, 1195.70715pt x 778.70924pt>
+File: images/dei.png Graphic file (type png)
+ <use images/dei.png>
+Package pdftex.def Info: images/dei.png used on input line 39.
 (pdftex.def)             Requested size: 109.21455pt x 71.13188pt.
 
 Overfull \hbox (28.40997pt too wide) in paragraph at lines 39--40
@@ -458,38 +458,56 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 45.
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./unipd.png> <./dei.png>]
-
-Underfull \hbox (badness 10000) in paragraph at lines 88--91
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./images/unipd.png> <./im
+ages/dei.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 136--137
 
  []
 
-[2] (Homework_1.aux) ) 
+[2] <images/PSD.jpg, id=29, 2746.26pt x 1610.015pt>
+File: images/PSD.jpg Graphic file (type jpg)
+ <use images/PSD.jpg>
+Package pdftex.def Info: images/PSD.jpg used on input line 140.
+(pdftex.def)             Requested size: 426.79134pt x 250.18848pt.
+
+Overfull \hbox (22.7622pt too wide) in paragraph at lines 140--141
+ [][] 
+ []
+
+<images/sigma_vs_N.jpg, id=30, 1124.2pt x 843.15pt>
+File: images/sigma_vs_N.jpg Graphic file (type jpg)
+
+<use images/sigma_vs_N.jpg>
+Package pdftex.def Info: images/sigma_vs_N.jpg used on input line 148.
+(pdftex.def)             Requested size: 142.26378pt x 106.69289pt.
+ [3 <./images/PSD.jpg> <./images/sigma_vs_N.jpg>]
+(Homework_1.aux) ) 
 Here is how much of TeX's memory you used:
- 5073 strings out of 493323
- 75308 string characters out of 3139065
- 156293 words of memory out of 3000000
- 8480 multiletter control sequences out of 15000+200000
- 18779 words of font info for 75 fonts, out of 3000000 for 9000
+ 5100 strings out of 493323
+ 75740 string characters out of 3139065
+ 159341 words of memory out of 3000000
+ 8500 multiletter control sequences out of 15000+200000
+ 19708 words of font info for 78 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,9n,38p,387b,200s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc
-10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
-sbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Homework_1.pdf (2 pages, 430149 bytes).
+ 39i,18n,39p,608b,327s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Homework_1.pdf (3 pages, 930461 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
+ 83 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
