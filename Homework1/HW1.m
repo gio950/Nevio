@@ -56,29 +56,29 @@ w_welch=window(@hamming,D);
 [Welch_P, Ns] = welchPSD(x, w_welch, S);
 var_Welch=Welch_P.^2/Ns;
 
-figure('Name','Welch periodogram');
-plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
-title('Welch periodogram estimate of the PSD')
-xlabel('f')
-ylabel('Amplitude (dB)')
-ylim([-15 30])
+% figure('Name','Welch periodogram');
+% plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
+% title('Welch periodogram estimate of the PSD')
+% xlabel('f')
+% ylabel('Amplitude (dB)')
+% ylim([-15 30])
 
 % Comparison of different S,D
-S = [20 50 70 100];
-D = [50 100 150 200];
-for i=1:4
-    w_welch=window(@hamming,D(i));
-    [Welch_P(:,i), Ns] = welchPSD(x, w_welch, S(i));
-    var_Welch=Welch_P(:,i).^2/Ns;
-end
-figure('Name','Welch periodogram as a function of D and S');
-plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
-title('Welch periodogram estimate of the PSD')
-xlabel('f')
-ylabel('Amplitude (dB)')
-ylim([0 25])
-grid
-legend(['D = ' int2str(D(1)) ' and S = ' int2str(S(1)) ], ['D = ' int2str(D(2)) ' and S = ' int2str(S(2)) ],['D = ' int2str(D(3)) ' and S = ' int2str(S(3)) ],['D = ' int2str(D(4)) ' and S = ' int2str(S(4)) ]);
+% S = [20 50 70 100];
+% D = [50 100 150 200];
+% for i=1:4
+%     w_welch=window(@hamming,D(i));
+%     [Welch_P(:,i), Ns] = welchPSD(x, w_welch, S(i));
+%     var_Welch=Welch_P(:,i).^2/Ns;
+% end
+% figure('Name','Welch periodogram as a function of D and S');
+% plot(1/Nsamples:1/Nsamples:1,10*log10(Welch_P))
+% title('Welch periodogram estimate of the PSD')
+% xlabel('f')
+% ylabel('Amplitude (dB)')
+% ylim([0 25])
+% grid
+% legend(['D = ' int2str(D(1)) ' and S = ' int2str(S(1)) ], ['D = ' int2str(D(2)) ' and S = ' int2str(S(2)) ],['D = ' int2str(D(3)) ' and S = ' int2str(S(3)) ],['D = ' int2str(D(4)) ' and S = ' int2str(S(4)) ]);
     
 
 
@@ -107,10 +107,9 @@ b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
 %% Choice of N
 N =2;
-[copt, Jmin ]=predictor(rx, N);
-t=20;
+[copt, Jmin, det_R ]=predictor(rx, N);
+t=10;
 Jvect=zeros(t,1);
-
 for i=1:length(Jvect)
     [c_it, J_it]=predictor(rx, i);
     Jvect(i)=J_it;
@@ -118,9 +117,9 @@ end
 
 figure('Name', 'J over N');
 plot(1:t,Jvect);
-title('J_{min} over N');
+title('$J_{min}$ vs N');
 xlim([1 t]);
-xlabel('N'); ylabel('J_{min}');
+xlabel('N'); ylabel('$J_{min}$');
 %{
 coeff=[1; copt];
 A = tf([1 copt.'], 1,1);
@@ -138,14 +137,14 @@ ylabel('$\sigma_w$ [dB]'), xlabel('Order of the AR(N) model')
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);
 [H_w, omega] = freqz(1, [1; a], Nsamples, 'whole');
-%{
+
 figure('Name','AR model estimate of the PSD');
 plot(omega/(2*pi), 10*log10(s_white*abs(H_w).^2));
 title('AR model estimate of the PSD');
 xlabel('f');
 ylabel('Amplitude (dB)');
 ylim([-15 40]);
-%}
+
 %% Final spectral plot
 figure('Name', 'Spectral Analysis');
 set(0,'defaultTextInterpreter','latex')          % to use LaTeX format

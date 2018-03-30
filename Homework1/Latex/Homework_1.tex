@@ -196,7 +196,27 @@ For the Periodogram the window used is the rectangular one, while for the Welch 
 \end{figure}	
 
 
+\clearpage
+\section*{PROBLEM 3}
+Given a discrete-time WSS random process \textit{x(k)} with zero mean at time \textit{k-1}, i.e. $\mathbf{x}^T(k-1) = [x(k-1), x(k-2), \dots, x(k-N)] $, the \textit{one-step forward predictor of order N} attempts to estimate the value of \textit{x(k)} using $\mathbf{x}^T(k-1)$. This problem can be solved by considering the signal $\mathbf{x}^T(k-1)$ as the input of a Wiener-Hopf filter of order N and $\textit{x(k)}$ as the reference signal. The solution is computed by the Wiener-Hopf equation 
+\begin{equation*}
+\mathbf{R}_N\mathbf{c}_{opt} = \mathbf{r}_N
+\end{equation*}
+It is important to underline that this solution holds if and only if the autocorrelation matrix $\mathbf{R}$ is invertible, i.e $\text{det}\mathbf{R}\ne0$. In this case the coefficent vector is optimum and it can be computed by
+\begin{equation*}
+\mathbf{c}_{opt} = \mathbf{R}^{-1}_N\mathbf{r}_N
+\end{equation*}
+Moreover, the minimum value of the cost function J is
+\begin{equation*}
+J_{min} = r_x(0)-\mathbf{r}_N^H\mathbf{c}_{opt}
+\end{equation*}
+Knowing that, given an AR process \textit{x} of order N, the optimum prediction coefficients $\mathbf{c}_{opt}$ coincide with the parameter $-\mathbf{a}$ of the process and, moreover, that $J_{min}=\sigma_w^2$, we can use the results of Problem 2 and get respectively:
 
+\begin{itemize}
+	\item N=2;
+	\item $\mathbf{c}_{opt} = - \mathbf{a} = [+0,657 - 0,101i, -0,935 + 0,305i]$; 
+	\item $J_{min}= \sigma_w^2 = r_x(0)+\mathbf{r}^H\mathbf{a}$.
+\end{itemize}
 
 
 

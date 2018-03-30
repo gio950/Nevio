@@ -73,6 +73,9 @@ for index = 1:N
     xlabel('Number of iterations')
 end
 
+set(0,'defaultTextInterpreter','latex')          % to use LaTeX format
+set(gca,'FontSize',10);
+
 figure('Name', 'Error function');
 plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter), 1:max_iter, 10*log10(mean_error));
 
