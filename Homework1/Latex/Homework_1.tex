@@ -159,7 +159,7 @@ For all these reasons, we decided that N=?? was a good trade-off.
 
 \clearpage
 \section*{PROBLEM 2}
-The only differen with Problem 1 is the noise variance, which is $\sigma_w=0.1$. However, now the noise component is almost negligible with respect the usful signal, and then we were able to provide a much more accurate analysis. The different spectral estimates are given in Figure [\ref{PSD_2}]. \\
+The only differen with Problem 1 is the noise variance, which is $\sigma_w=0.1$. Now the noise component is almost negligible with respect the usful signal, and then we were able to provide a much more accurate analysis. The different spectral estimates are given in Figure [\ref{PSD_2}]. \\
 
 \begin{figure}[h!]
 	\centering
@@ -218,12 +218,24 @@ Knowing that, given an AR process \textit{x} of order N, the optimum prediction 
 	\item $J_{min}= \sigma_w^2 = r_x(0)+\mathbf{r}^H\mathbf{a}$.
 \end{itemize}
 
+The transfer function of the model is $H_{AR}=\frac{1}{A(z)}$ where $A(z)= 1+\sum_{n=1}^{2}a_nz^{-n}$ and the noise variance is $\sigma_w^2=-13.2397 dB$. Poles and zeros of \textit{A(z)} are shown in Figure [\ref{Az}].
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=10cm]{images/zplane_Az.jpg}
+	\caption{Zeros of A(z) in the complex plane.}\label{Az}
+\end{figure}	
 
+\clearpage
+Notice that zeros of \textit{A(z)} are poles of $H_{AR}$. For this reason, a zero near the unit circle of \textit{A(z)} corresponds to a pole of $H_{AR}$ with magnitude almost equale to 1, which brings $|H_{AR}|\rightarrow \infty$. This can be easly observed in the frequensy domain, in which a the condition of a pole with magnitude almost equal to 1 coincides with a peak centered at frequency $\frac{\angle(\Theta)}{2\pi}$, where the pole is $p=\rho e^{j\Theta}$, $\rho \approx 1$. The same reasoning is applied to the PSD estimate given by the AR model of equation \ref{E_AR}, therefore knowing the coefficient vector $\mathbf{a}$ we can compute the frequensies of the 'discrete compinents'. \\
+The values we obtained are the following:
 
-
-
-
+\begin{equation*}
+\begin{split}
+& z_1 = \rho_1 e^{j\Theta_1} = 0.9932e^{+1,0714j} \quad \quad \quad \quad \quad \quad  f_1= \frac{\Theta_1}{2\pi} = 0.1705\\
+& z_2 = \rho_2 e^{j\Theta_2} = 0.9897e^{-1,3864j} \quad \quad \quad \quad \quad \quad  f_2= \frac{\Theta_2}{2\pi} = 0.7793
+\end{split}
+\end{equation*}
 
 
 
