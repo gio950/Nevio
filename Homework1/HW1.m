@@ -1,3 +1,4 @@
+
 clc; 
 close all; 
 clear global; clearvars;
@@ -11,7 +12,7 @@ Nsamples=length(x);
 
 % Autocorrelation (unbiased estimate)
 [rx]=autocorrelation_Unb(x);
-L=floor(Nsamples/5);%L should be lower than the length of the r.p. because of the high variance when n approaches K
+L=floor(Nsamples/5);% L should be lower than the length of the r.p. because of the high variance when n approaches K
 rx=rx(1:L);
 
 % Blackman-Tukey correlogram 
@@ -64,8 +65,8 @@ var_Welch=Welch_P.^2/Ns;
 % ylim([-15 30])
 
 % Comparison of different S,D
-% S = [20 50 70 100];
-% D = [50 100 150 200];
+% S = [20 50 70 200];
+% D = [50 100 150 400];
 % for i=1:4
 %     w_welch=window(@hamming,D(i));
 %     [Welch_P(:,i), Ns] = welchPSD(x, w_welch, S(i));
@@ -79,34 +80,34 @@ var_Welch=Welch_P.^2/Ns;
 % ylim([0 25])
 % grid
 % legend(['D = ' int2str(D(1)) ' and S = ' int2str(S(1)) ], ['D = ' int2str(D(2)) ' and S = ' int2str(S(2)) ],['D = ' int2str(D(3)) ' and S = ' int2str(S(3)) ],['D = ' int2str(D(4)) ' and S = ' int2str(S(4)) ]);
-    
+%     
 
 
 % Analytical PSD: compute the transform of rx(n) on paper and plot it
 % according to the requirements
 %sigmaw=0.1
-% b = zeros(1,800);
-% for i=1:length(b)
-%     b(i) = 10*log10(0.1);
-% end
-
-% 30 is random choice just to see the plot
-%b(ceil(0.17*800)) = 10*log10(Nsamples);
-%b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
-
-%sigmaw=2
-
 b = zeros(1,800);
 for i=1:length(b)
-    b(i) = 10*log10(2);
+    b(i) = 10*log10(0.1);
 end
 
 % 30 is random choice just to see the plot
 b(ceil(0.17*800)) = 10*log10(Nsamples);
 b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
 
+%sigmaw=2
+
+% b = zeros(1,800);
+% for i=1:length(b)
+%     b(i) = 10*log10(2);
+% end
+% 
+% % 30 is random choice just to see the plot
+% b(ceil(0.17*800)) = 10*log10(Nsamples);
+% b(ceil(0.78*800)) = 0.8*10*log10(Nsamples);
+
 %% Choice of N
-N =2;
+N =5;
 [copt, Jmin, det_R ]=predictor(rx, N);
 t=10;
 Jvect=zeros(t,1);
@@ -115,24 +116,26 @@ for i=1:length(Jvect)
     Jvect(i)=J_it;
 end
 
-figure('Name', 'J over N');
-plot(1:t,Jvect);
-title('$J_{min}$ vs N');
-xlim([1 t]);
-xlabel('N'); ylabel('$J_{min}$');
+% figure('Name', 'J over N');
+% plot(1:t,Jvect);
+% title('$J_{min}$ vs N');
+% xlim([1 t]);
+% xlabel('N'); ylabel('$J_{min}$');
 %{
 coeff=[1; copt];
 A = tf([1 copt.'], 1,1);
 figure, pzmap(A)
 %}
-upp_limit = 10;
-sigma_w = zeros(1, upp_limit);
-for N = 1:upp_limit
-   [~, sigma_w(N)] = findAR(N, rx);
-end
-figure, plot(1:upp_limit, 10*log10(sigma_w)), grid
-title('Variance of the AR model of the spectral lines')
-ylabel('$\sigma_w$ [dB]'), xlabel('Order of the AR(N) model')
+
+% Variance of the AR model of the spectral lines
+% upp_limit = 100;
+% sigma_w = zeros(1, upp_limit);
+% for N = 1:upp_limit
+%    [~, sigma_w(N)] = findAR(N, rx);
+% end
+% figure, plot(1:upp_limit, 10*log10(sigma_w)), grid
+% title('Variance of the AR model of the spectral lines')
+% ylabel('$J_{min}$ [dB]'), xlabel('Order of the AR(N) model')
 %% AR model
 % Coefficients of Wiener filter
 [a, s_white, d]=findAR(N, rx);

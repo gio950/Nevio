@@ -13,6 +13,12 @@ rx = rx(1:L);
 [a, s_white] = findAR(N, rx);
 K = L;
 
+% Autocorrelation Matrix
+col = rx(1:N);
+row = conj(col);
+R=toeplitz(col, row);
+mu_opt = 2/sum(eig(R));
+
 % Max number of iterations
 max_iter = 800;
 
@@ -21,7 +27,7 @@ c = zeros(N, max_iter + 1);
 e = zeros(1, max_iter);
 
 % Choice of parameter mu
-mu_tilde = 0.05;
+mu_tilde = 0.06;
 mu = mu_tilde/(rx(1)*N);
 
 % Center signal around its mean
@@ -48,39 +54,65 @@ end
 load('Jmin.mat', 'mean_error');
 load('avg_coeff.mat', 'c_mean');
 
-for index = 1:N
-    figure('Name', ['Coefficient of index ' int2str(index)]);
-    subplot(2, 1, 1)
-    plot(1:max_iter+1, real(c(index, :)));
-    hold on;
-    plot([1, max_iter+1], -real(a(index))*[1 1]);
-    hold on;
-    plot(1:max_iter+1, real(c_mean(index, :)));
-    title(['Real part of c' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['c_{est}' int2str(index)], ['average' int2str(index)]);
-    xlim([0 max_iter]);
-    
-    
-    subplot(2, 1, 2);
-    plot(1:max_iter+1, imag(c(index, :)));
-    hold on;
-    plot([1,max_iter+1], -imag(a(index))*[1 1]);
-    hold on;
-    plot(1:max_iter+1, imag(c_mean(index, :)));
-    title(['Imaginary part of c' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['c_{est}' int2str(index)],['average' int2str(index)]);
-    xlim([0 max_iter]);
-    xlabel('Number of iterations')
-end
+% set(0,'defaultTextInterpreter','latex')          % to use LaTeX format
+% set(gca,'FontSize',10);
+%% Plot of Real Part
+figure()
+line(1:max_iter+1,real(c(1, :)),'Color','r');
+line(1:max_iter+1,-real(a(1))*ones([1,max_iter+1]),'Color','k','LineStyle','--');
+ax1 = gca; % current axes
+ax1.XColor = 'k';
+ax1.YColor = 'k'
+ax1_pos = ax1.Position; % position of first axes
+xlabel('Number of iterations')
+ylim([0 1]);
+xlim([1 800]);
+ylabel('$c_1$');
+legend('c_{1,lms}');
 
-set(0,'defaultTextInterpreter','latex')          % to use LaTeX format
-set(gca,'FontSize',10);
+ax2 = axes('Position',ax1_pos,'XAxisLocation','top','YAxisLocation','right','Color','none');
+line(1:max_iter+1,real(c(2, :)),'Color','b');
+line(1:max_iter+1,-real(a(2))*ones([1,max_iter+1]),'Color','k','LineStyle','--');
+ylim([-1 0]);
+xlim([1 800]);
+ylabel('$c_2$');
+legend('c_{2,lms}');
 
+%% Plot of Imaginary Part
+figure()
+line(1:max_iter+1,imag(c(1, :)),'Color','r');
+line(1:max_iter+1,-imag(a(1))*ones([1,max_iter+1]),'Color','k','LineStyle','--');
+ax1 = gca; % current axes
+ax1.XColor = 'k';
+ax1.YColor = 'k'
+ax1_pos = ax1.Position; % position of first axes
+xlabel('Number of iterations')
+ylim([-0.15 0.1]);
+xlim([1 800]);
+ylabel('$c_1$');
+legend('c_{1,lms}');
+
+ax2 = axes('Position',ax1_pos,'XAxisLocation','top','YAxisLocation','right','Color','none');
+line(1:max_iter+1,imag(c(2, :)),'Color','b');
+line(1:max_iter+1,-imag(a(2))*ones([1,max_iter+1]),'Color','k','LineStyle','--');
+ylim([-0.05 0.39]);
+xlim([1 800]);
+ylabel('$c_2$');
+legend('c_{2,lms}');
+
+%% Plot of Jmin
 figure('Name', 'Error function');
-plot(1:max_iter, 10*log10(abs(e).^2), 1:max_iter, 10*log10(s_white)*ones(1, max_iter), 1:max_iter, 10*log10(mean_error));
-
-title('Error function at each iteration');
-legend('|e(k)|^2', 'J_{min}','J(k)');
+plot(1:max_iter, 10*log10(abs(e).^2)); hold on
+plot(1:max_iter, 10*log10(mean_error)); hold on
+plot(1:max_iter, 10*log10(s_white)*ones(1, max_iter)','r--','LineWidth',2);
+grid on
+title('Error function at each iteration','FontSize',15);
+legend('|e(k)|^2','J(k)','J_{min}');
 ylim([-15 10])
 xlabel('k')
-ylabel('|e(k)|^2, J_{min}, \sigma_w^2')
+ylabel('$|e(k)|^2$,$J(k)$, $J_{min}$')
+
+
+set(0,'defaultTextInterpreter','latex')          % to use LaTeX format
+set(gca,'FontSize',20);
+

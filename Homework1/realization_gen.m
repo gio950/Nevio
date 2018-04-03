@@ -22,8 +22,8 @@ for i=1:300
     xi=zeros(Nsamples,1);
     xq=zeros(Nsamples,1);
     for k=1:Nsamples
-        xi(k)=cos(2*pi*f1*k+phi1)+cos(2*pi*f2*k+phi2)+wi(k);
-        xq(k)=sin(2*pi*f1*k+phi1)+sin(2*pi*f2*k+phi2)+wq(k);
+        xi(k)=cos(2*pi*f1*k+phi1)+0.8*cos(2*pi*f2*k+phi2)+wi(k);
+        xq(k)=sin(2*pi*f1*k+phi1)+0.8*sin(2*pi*f2*k+phi2)+wq(k);
     end
     x(:,i) = xi + 1i*xq;
 end

@@ -57,7 +57,18 @@ Given a single realization of 800 i.i.d. samples of the r.p $ \left\lbrace x(k) 
 \begin{equation*}
 x(k) = e^{j(2 \pi f_1k+\varphi_1)}+0.8e^{j(2 \pi f_2k+\varphi_2)}+w(k)
 \end{equation*}
-where $w(k)\sim \mathcal{CN}(0,\sigma_w^2)$, $f_1=0.17$, $f_2 = 0.78$, $\sigma_w^2=2.0$ $\varphi_{1,2}\sim \mathcal{U}(0,2\pi)$ are statistically independent, we want to estimate the $\mathcal{PSD}$ of $ \left\lbrace x(k) \right\rbrace$ using the following models:
+where $w(k)\sim \mathcal{CN}(0,\sigma_w^2)$, $f_1=0.17$, $f_2 = 0.78$, $\sigma_w^2=2.0$ $\varphi_{1,2}\sim \mathcal{U}(0,2\pi)$ are statistically independent, we want to estimate the $\mathcal{PSD}$ of $ \left\lbrace x(k) \right\rbrace$ using the following models. \\
+The signal was generated using the \textit{in-phase} and \textit{in-quadrature components} notation:
+\begin{equation*}
+	x(k) = x_I(k) + jx_Q(k)
+\end{equation*} 
+where respectively
+\begin{equation*}
+\begin{split}
+x_I(k) = \cos(2\pi f_1k\varphi_1) + 0.8\cos(2\pi f_2k\varphi_2) + w(k) \\
+x_Q(k) = \sin(2\pi f_1k\varphi_1) + 0.8\sin(2\pi f_2k\varphi_2) + w(k)
+\end{split}
+\end{equation*}
 
 \subsection*{BLACKMAN AND TUKEY CORRELOGRAM}
 \begin{equation}
@@ -67,10 +78,10 @@ where $\hat{r}_x(n)$ is the autocorrelation of x taken from -L to L and $w(n)$ i
 \begin{equation*}
 \hat{r}_x(n) = \frac{1}{K-n}\sum_{k=n}^{K-1}x(k)x^*(k-n) \quad \quad n = 0,1,...,K-1
 \end{equation*}
-where K is the number of samples. In ordert to reduce the variance of the estimate, we chose $L=\lfloor \frac{K}{5} \rfloor$. The hamming window is defined by:
+where K is the number of samples. In order to reduce the variance of the estimate, we chose $L=\lfloor \frac{K}{5} \rfloor$. The hamming window is defined by:
 \begin{equation}\label{ham}
 w(k) = \begin{cases}
-       0.54 + 0.46 \cos \left(2\pi \frac{k-\frac{D-1}{2}}{D-1} \right) \quad \quad k=0,1,...,D-1 \\
+       0.54 + 0.46 \cos \left(2\pi \frac{k-\frac{L-1}{2}}{L-1} \right) \quad \quad k=0,1,...,L-1 \\
        0 \quad \quad \quad \quad \quad \quad \quad \quad \quad\quad \quad \quad \quad \quad elsewhere
        \end{cases}
 \end{equation} 
@@ -87,7 +98,7 @@ where $\tilde{\mathcal{X}}(f) = T_c \mathcal{X}(f)$, $\mathcal{X}(f)$ is the Fou
 \mathcal{P}_{WE}(F) = \frac{1}{N_s}\sum_{x=0}^{N_s-1}\mathcal{P}_{PER}^{(s)}(f)
 \end{equation}
 where $\mathcal{P}_{PER}^{(s)}(f)$ is the periodogram estimate given by Eq.\ref{Per}.  
-The model extracts different subsequences of consecutive D samples which eventually overlap. If $x^{(s)}$ is the s-th subsequence, characterized by S samples in common with the previous subsequence $x^{(s-1)}$ and with the following $x^{(s+1)}$, the total number of subsequences is $N_s = \lfloor \frac{K-D}{D-S}-1 \rfloor$. In our analysis, we chose S=?? and D=??. \\
+The model extracts different subsequences of consecutive D samples which eventually overlap. If $x^{(s)}$ is the s-th subsequence, characterized by S samples in common with the previous subsequence $x^{(s-1)}$ and with the following $x^{(s+1)}$, the total number of subsequences is $N_s = \lfloor \frac{K-D}{D-S}-1 \rfloor$=160 since in our analysis, we chose S=100 and D=200. \\
 More in details, we computed:
 \begin{equation*}
 \begin{split}
@@ -133,7 +144,7 @@ The noise variance deriving from the model is
 \end{equation}
 
 \subsection*{CONCLUSIONS}
-A comparison between different PSD estimates of $ \left\lbrace x(k) \right\rbrace$ is now discussed. The difficulties in this problem were related to the fact that the noise variance is double with respect to the maximum amplitude of the usefull signal. For this reason, a good analysis can be achieved only by considering a generated sequence $ \left\lbrace x(k) \right\rbrace$ which is not too corrupted at the carriers frequencies $f_1$ and $f_2$. The four different PSD estimates are shown in Figure [\ref{PSD}]. \\
+A comparison between different PSD estimates of $ \left\lbrace x(k) \right\rbrace$ is now discussed. The difficulties in this problem were related to the fact that the noise variance is double with respect to the maximum amplitude of the useful signal. For this reason, a good analysis can be achieved only by considering a generated sequence $ \left\lbrace x(k) \right\rbrace$ which is not too corrupted at the carrier frequencies $f_1$ and $f_2$. The four different PSD estimates are shown in Figure [\ref{PSD}]. \\
 
 \begin{figure}
 	\centering
@@ -141,7 +152,7 @@ A comparison between different PSD estimates of $ \left\lbrace x(k) \right\rbrac
 	\caption{PSD estimates.}\label{PSD} 
 \end{figure}
 
-The parameters of the different models are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, and the window used is a Hamming window definde in Eq. \ref{ham}. For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ still using an Hamming window. This choise was made by observing different PSD estimates with varying values of S and D, as shown in Figure [\ref{WelchSD}]. The order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN}].
+The parameters of the different models are as follow. The order of the autocorrelation estimator for the Correlogram is $ L = \lfloor K/5 \rfloor = 160 $, and the window used is a Hamming window definde in Eq. \ref{ham}. For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=200$ and $S=100$ still using an Hamming window in order to emphasize the discrete components. This choise was made by observing different PSD estimates with varying values of S and D, as shown in Figure [\ref{WelchSD}]. The order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN}].
 
 \begin{figure}
 	\centering
@@ -155,11 +166,11 @@ The parameters of the different models are as follow. The order of the autocorre
 \end{figure}
 
 It is easy to see that no significant keen occurs neither for high value of N, thus for this problem there is not a clean value that should be chosen. On the other hand, a large N may result in an ill-conditioned autocorrelation matrix $\mathbf{R}$, this because of the presence of spectral lines in the original process.
-For all these reasons, we decided that N=?? was a good trade-off.
+For all these reasons, we decided that N=25 was a good trade-off.
 
 \clearpage
 \section*{PROBLEM 2}
-The only differen with Problem 1 is the noise variance, which is $\sigma_w=0.1$. Now the noise component is almost negligible with respect the usful signal, and then we were able to provide a much more accurate analysis. The different spectral estimates are given in Figure [\ref{PSD_2}]. \\
+The only different with Problem 1 is the noise variance, which is $\sigma_w=0.1$. Now the noise component is almost negligible with respect the usful signal, and then we were able to provide a much more accurate analysis. The different spectral estimates are given in Figure [\ref{PSD_2}]. \\
 
 \begin{figure}[h!]
 	\centering
@@ -167,14 +178,14 @@ The only differen with Problem 1 is the noise variance, which is $\sigma_w=0.1$.
 	\caption{PSD estimates.}\label{PSD_2} 
 \end{figure}
 
-The parameters of the model are as follow. The order of the autocorrelation estimator for the Correlogram is $ N_{corr} = \lfloor K/5 \rfloor = 160 $, and the window used is a Bartlet window definde as
+The parameters of the model are as follow. The order of the autocorrelation estimator for the Correlogram is $ L = \lfloor K/5 \rfloor = 160 $, and the window used is a Bartlet window definde as
 \begin{equation}\label{Bart}
 w(k) = \begin{cases}
-1-2 \left | \frac{k-\frac{D-1}{2}}{D-1} \right | \quad \quad k=0,1,...,D-1 \\
-0 \quad \quad \quad \quad \quad \quad \quad \quad \quad\quad \quad \quad \quad \quad elsewhere
+1-2 \left | \frac{k-\frac{L-1}{2}}{L-1} \right | \quad \quad k=0,1,...,L-1 \\
+0 \quad \quad \quad \quad \quad \quad \quad \quad  elsewhere
 \end{cases}
 \end{equation} 
-This choise was taken by comparing the PSD estimates obtained with different windows, respectively: \textit{Hamming}, \textit{Rectangular} and \textit{Bartlett}. As shown in Figure [\ref{Welch_2}], the last one has a much more accurate behaviour.
+This choise was taken by comparing the PSD estimates obtained with different windows, respectively: \textit{Hamming}, \textit{Rectangular} and \textit{Bartlett}. As shown in Figure [\ref{Welch_2}], the last one has a much more smooth behaviour.
 
 \begin{figure}
 	\centering
@@ -182,7 +193,7 @@ This choise was taken by comparing the PSD estimates obtained with different win
 	\caption{PSD estimates.}\label{Welch_2} 
 \end{figure}
 
-For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=??$ and $S=??$ using an Hamming window. Again, this choise was taken by comparing the PSD estimates with varying values of D and S, given in FIgure [\ref{WelchSD_2}]. Finally, the order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN_2}]. Here it can be observed a knee in the function, which corresponds to a value of N=2.
+For the Periodogram the window used is the rectangular one, while for the Welch Periodogram we set $D=400$ and $S=200$ using an Bartlett window. Again, this choise was taken by comparing the PSD estimates with varying values of D and S, given in Figure [\ref{WelchSD_2}]. Note that for higher values of S and D the Welch estimate tend to approximate with high confidence the analytical PSD, and at the same time it tends to follow the Periodogram estimate. This is a consequence of Welch model, since by considering longer subsequences the total number of this decrease and then the average is computed taking less Periodograms. Finally, the order evaluation for the AR model was carried out by analysing the behaviour of the noise variance $\sigma_w^2$ with varying N defined in eq. \ref{sigmaw} and graphically shown in Fig. [\ref{sigmavsN_2}]. Here it can be observed a knee in the function, which corresponds to a value of N=2. Note that also N=5 can be a good choise, this because it yelds to a lower noise variance and at the same time the AR model approximates in a better way the analytical PSD, having more degrees of freedom. However N=2 is sufficent to describe a model with two discrete components and also it is more feasible in the remaining problems.
 
 \begin{figure}
 	\centering
@@ -227,7 +238,7 @@ The transfer function of the model is $H_{AR}=\frac{1}{A(z)}$ where $A(z)= 1+\su
 \end{figure}	
 
 \clearpage
-Notice that zeros of \textit{A(z)} are poles of $H_{AR}$. For this reason, a zero near the unit circle of \textit{A(z)} corresponds to a pole of $H_{AR}$ with magnitude almost equale to 1, which brings $|H_{AR}|\rightarrow \infty$. This can be easly observed in the frequensy domain, in which a the condition of a pole with magnitude almost equal to 1 coincides with a peak centered at frequency $\frac{\angle(\Theta)}{2\pi}$, where the pole is $p=\rho e^{j\Theta}$, $\rho \approx 1$. The same reasoning is applied to the PSD estimate given by the AR model of equation \ref{E_AR}, therefore knowing the coefficient vector $\mathbf{a}$ we can compute the frequensies of the 'discrete compinents'. \\
+Notice that zeros of \textit{A(z)} are poles of $H_{AR}$. For this reason, a zero near the unit circle of \textit{A(z)} corresponds to a pole of $H_{AR}$ with magnitude almost equal to 1, which brings $|H_{AR}|\rightarrow \infty$. This can be easly observed in the frequensy domain, in which a the condition of a pole with magnitude almost equal to 1 coincides with a peak centered at frequency $\frac{\angle(\Theta)}{2\pi}$, where the pole is $p=\rho e^{j\Theta}$, $\rho \approx 1$. The same reasoning is applied to the PSD estimate given by the AR model of equation \ref{E_AR}, therefore knowing the coefficient vector $\mathbf{a}$ we can compute the frequensies of the 'discrete components'. \\
 The values we obtained are the following:
 
 \begin{equation*}
@@ -237,12 +248,59 @@ The values we obtained are the following:
 \end{split}
 \end{equation*}
 
+It is easy to see that the carrier frequencies evaluated using the AR model looks very similar to the original ones used to create the $\left \lbrace x\left(k\right) \right \rbrace$ process 
 
+\clearpage
+\section*{PROBLEM 4}
+The setup for the \textit{least mean-square} (LMS) is the one described in Problem 3. It provides a recursive method to compute an approximation of the optimal Wiener-Hopf solution for the predictor problem without using the autocorrelation matrix $\mathbf{R}$ and the vector $\mathbf{r}$, which are instead necessary in order to compute the \textit{optima} coefficients. \\
+The equation for the adaptation of the filter coefficients is 
+\begin{equation}\label{coeff}
+\mathbf{c}(k+1) = \mathbf{c}(k)+\mu e(k)\mathbf{x}^*(k)
+\end{equation}
+where \textit{k} is the considered instant. The two parameters that must be determined are the filter order N and the update coefficient $\mu = \frac{\tilde{\mu}}{Nr_x(0)}$, for which $\tilde{\mu}$ should be in the range $(0,2)$ to garantee convergency. \\
+Since the sequence $ \left\lbrace x(k) \right\rbrace$ is the same as Problem 3, we chose N=2 and starting from the all-zero initial condition and $\tilde{\mu}=0.06$ we run the algorithm:
+\begin{enumerate}
+	\item given $[x(k), x(k-1), x(k-2), \dots, x(k-N+1)]^T $, $x(k)=0 \quad \forall k<0$, we computed the predictor value
+	      $$ y(k) = \sum_{n=1}^Nc_nx(k-n) $$
+	\item we evaluated the error $ f_N(k) = d(k)-y(k) = x(k+1)-y(k) $; 
+	\item we updated the coefficients using Equation \ref{coeff}.
+\end{enumerate}
 
+The convergence curves for $\Re[c_i]$ and $\Im[c_i]$, $i=1,2$, are given in Figures \ref{c1} and \ref{c2} both showing also the theoretical value of convergence. In Figure \ref{e} is also given the cost function of the Wiener filter approximated by $|e(k)|^2$ in the LMS algorithm.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/c1.jpg}
+	\caption{}\label{c1}
+\end{figure}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/c2.jpg}
+	\caption{}\label{c2}
+\end{figure}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{images/e(k).jpg}
+	\caption{}\label{e}
+\end{figure}
 
+As expected, both the coefficients vector $\mathbf{c}$ and the squared-error $|e(k)|^2$ converge to $-\mathbf{a}$ and $\sigma_w^2$ respectively. This is true not only for a single realization of $ \left\lbrace x(k) \right\rbrace$ but also in mean, assuming the process to be ergotic. This can be easily seen in Figure \ref{e}, where the orange curve represents the averege error evaluated over 300 realizations. Note that here the convergence is achieved after almost 300 iterations both for the real and imaginary part of $c_1$ and $c_2$, but this is related to our choise of $\tilde{\mu}=0.06$. We observed that this was a good trade-off between fast-convergence and grassy behaviour of the coefficients around the optimum values, since higher values ensured faster convergency but also higher fluctuations. \\
+The values we obtained are the following:
+
+\begin{center}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{c|c|c}
+			\toprule
+			$\mathbf{c_1(600)}$ & $\mathbf{c_2(600)]}$ & \textbf{mean over last 100 values} \\
+			\midrule
+			0.6579 - i0.0968 & -0.9393 + i0.3075 & $\bar{c_1}$=0.6535 - i0.1004 \quad $\bar{c_2}$=-0.9330 + i0.3051\\
+			\bottomrule		
+		\end{tabular}
+	\end{table}
+\end{center}
 
 
 

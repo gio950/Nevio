@@ -4,7 +4,6 @@ clc; close all; clear global; clearvars;
 
 % Load one realization
 load('realizations.mat','x');
-
 % Max number of iterations
 max_iter = 800;
 % Set parameters
@@ -63,33 +62,11 @@ mean_error = mean(abs(e.^2));
     %mean_error(k) = sum(e(:,k))/size(e,1);
 %end
 
-
-for index = 1:N
-    figure('Name', ['Coefficient of index ' int2str(index)]);
-    subplot(2, 1, 1)
-    plot(1:max_iter+1, real(c_mean(index, :)));
-    hold on;
-    plot([1, max_iter+1], -real(a(index))*[1 1]);
-    title(['Real part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 800])
-    xlabel('Number of iterations');
-    
-    subplot(2, 1, 2);
-    plot(1:max_iter+1, imag(c_mean(index, :)));
-    hold on;
-    plot([1,max_iter+1], -imag(a(index))*[1 1]);
-    title(['Imaginary part of c_{mean}' int2str(index) ' and c_{opt}' int2str(index)]);
-    legend(['c' int2str(index)], ['a' int2str(index)]);
-    xlim([0 800])
-    xlabel('Number of iterations');
-end
-
 figure('Name','Mean squared error');
 plot(1:max_iter,10*log10(mean_error), 1:max_iter, 10*log10(s_white)*ones(1, max_iter));
 title('Mean squared error over iterations');
 xlabel('Number of iterations'); ylabel('Mean Squared Error (dB)');
 
 
-%save('Jmin.mat', 'mean_error');
-%save('avg_coeff.mat', 'c_mean');
+% save('Jmin.mat', 'mean_error');
+% save('avg_coeff.mat', 'c_mean');
